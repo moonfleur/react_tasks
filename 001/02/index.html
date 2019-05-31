@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02</title>
+</head>
+<body>
+<script>
+    //1
+    // const nativeArray = [1, [2, 3, [4, 5], [2, 4]], 3, [[2, [3, [1]], 4], [3]]];
+    // const receivedArray = (arr) => {
+    //     return arr.reduce( (previous, current) => {
+    //         return previous.concat(Array.isArray(current) ? receivedArray(current) : current);
+    //     }, []);
+    // };
+    //
+    // console.log(receivedArray(nativeArray));
+
+    //2, 3
+    // const nativeObj = {
+    //     user_name: 'shar',
+    //     is_logged_in: true
+    // };
+    // const obj = {
+    //     all_users: [
+    //         {
+    //             user_name: 'shar',
+    //             info: {
+    //                 full_description: '42'
+    //             }
+    //         }
+    //     ]
+    // };
+    //
+    // function toCamelCase (obj) {
+    //     let rtn = obj;
+    //     if (typeof (obj) === 'object') {
+    //         if (obj instanceof Array) {
+    //             rtn = obj.map(toCamelCase)
+    //         } else {
+    //             rtn = {};
+    //             for (let key in obj) {
+    //                 if (obj.hasOwnProperty(key)) {
+    //                     const newKey = key.replace(/(_\w)/g, k => k[1].toUpperCase())
+    //                     rtn[newKey] = toCamelCase(obj[key])
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return rtn
+    // }
+    //
+    // console.log(toCamelCase(nativeObj));
+    // console.log(toCamelCase(obj));
+</script>
+</body>
+</html>
