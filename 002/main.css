@@ -1,0 +1,45 @@
+.article_block {
+    width: 400px;
+}
+
+.feedback {
+    display: block;
+}
+
+.articleFeed {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.fa-heart,
+.fa-comment-alt {
+    margin-right: 5px;
+    transition: all 0.3s ease;
+}
+
+.fa-heart:hover {
+    transition: all 0.3s ease;
+    color: hotpink;
+    cursor: pointer;
+}
+
+.fa-comment-alt:hover {
+    transition: all 0.3s ease;
+    color: #7f7f7f;
+    cursor: pointer;
+}
+
+/*3*/
+
+.secondSide {
+    background-color: green;
+    width: 200px;
+    height: 300px;
+}
+
+.firstSide {
+    background: url("http://placekitten.com/g/200/300");
+    width: 200px;
+    height: 300px;
+}
+
