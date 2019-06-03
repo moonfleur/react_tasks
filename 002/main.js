@@ -92,8 +92,8 @@
 //     render() {
 //         const icon = this.state.image ? <FirstSide className="firstSide"/> : <SecondSide className="secondSide"/>;
 //         return (
-//             <div onClick={this.handleClick}>
-//                 <div>{icon}</div>
+//             <div onClick={this.handleClick} className="scene">
+//                 <div className="card">{icon}</div>
 //             </div>
 //         );
 //     }
@@ -103,4 +103,135 @@
 //     <MovingCard />,
 //     document.getElementById('root')
 // );
+
+//4
+const Tweet = React.createClass({
+    getInitialState() {
+        return {
+            likes: 233,
+            retweets: 100,
+            liked: true,
+            retweeted: true,
+            likesColor: "red",
+            retweetsColor: "green",
+            fontSize: 21,
+            disabled: false
+        }
+    },
+
+    handleIncrementLikes () {
+        this.setState({ likes: this.state.likes + 1 });
+
+        const likes = JSON.stringify(this.state.likes);
+        localStorage.setItem('likes', likes);
+
+        if(this.liked) {
+            this.setState({ color: 'red'});
+            this.liked = false;
+        }
+    },
+
+    handleIncrementRetweets () {
+        this.setState({ retweets: this.state.retweets + 1 });
+        if(this.retweeted) {
+            this.setState({ color: 'green'});
+        }
+    },
+
+    // saveToLocalStorage() {
+    //     const likes = JSON.stringify(this.state.likes);
+    //
+    //     localStorage.setItem('likes', likes)
+    // },
+    //
+    // componentDidUpdate(prevProps, prevState) {
+    //     if(prevState.likes !== this.state.likes) {
+    //         this.saveToLocalStorage();
+    //     }
+    // },
+
+    render(){
+        const popularity = this.state.likes + this.state.retweets;
+        if(popularity < 100){
+            this.state.fontSize = '16px'
+        }
+        if(popularity < 1000){
+            this.state.fontSize = '18px'
+        }
+        if(popularity > 1000){
+            this.state.fontSize = '22px'
+        }
+
+        let changeColorLikes, changeColorRetweets;
+        if(this.liked) {
+            changeColorLikes = this.state.likesColor;
+            this.liked = false;
+        }
+        this.liked = true;
+
+        if(this.retweeted) {
+            changeColorRetweets = this.state.retweetsColor;
+            this.retweeted = false;
+        }
+        this.retweeted = true;
+
+        const {
+            author,
+            text,
+            image,
+            avatar,
+        } = this.props;
+        return (
+            <div className="tweet">
+                <img
+                    className="tweetAvatar"
+                    src={avatar}
+                    alt={author}
+                />
+                <div className="tweetBody">
+                    <a
+                        className="tweetAuthor"
+                        href={`https://twitter.com/franzkafka_`}
+                        target="_blank"
+                    >
+                        <h3 className="authorName">{author}</h3>
+                        @{author}
+                    </a>
+                    <p className="tweetText" style={{fontSize: this.state.fontSize}}>{text}</p>
+                    <img
+                        className="tweetImage"
+                        src={image}
+                        alt={author}
+                    />
+
+                    <div className="tweetStats">
+                        <div className="tweetRetweets" onClick={this.handleIncrementRetweets} style={{color: changeColorRetweets}}>
+                            <i className="tweetIconRetw fa fa-retweet" style={{color: changeColorRetweets}}/>
+                            {this.state.retweets}
+                        </div>
+
+                        <div className="tweetLikes" onClick={this.handleIncrementLikes} style={{color: changeColorLikes}}>
+                            <i className="tweetIconsLike fa fa-heart" style={{color: changeColorLikes}}/>
+                            {localStorage.getItem('likes')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+});
+
+ReactDOM.render (
+    <div>
+        <Tweet
+            author="franz_kafka"
+            text="You do not need to leave your room. Remain sitting at your table and listen. Be unmasked, it has no choice, it will roll in ecstasy at your feet."
+            image="https://pictures.abebooks.com/2920229/17185054825.jpg"
+            avatar="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Kafka1906_cropped.jpg/267px-Kafka1906_cropped.jpg"
+            likes={233}
+            retweets={512}
+        />
+    </div>,
+    document.getElementById('root')
+);
 
