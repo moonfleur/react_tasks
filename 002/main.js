@@ -120,6 +120,9 @@ const Tweet = React.createClass({
     },
 
     handleIncrementLikes () {
+
+
+
         this.setState({ likes: this.state.likes + 1 });
 
         const likes = JSON.stringify(this.state.likes);
