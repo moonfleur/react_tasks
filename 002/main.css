@@ -19,7 +19,7 @@
 
 .fa-heart:hover {
     transition: all 0.3s ease;
-    color: hotpink;
+    color: red;
     cursor: pointer;
 }
 
@@ -92,25 +92,42 @@
     transition: all 0.5s ease;
 }
 
-/*.tweetLikesBtn {*/
-/*    margin-right: 10px;*/
-/*    display: inline-block;*/
-/*    transition: all 0.5s ease;*/
-/*    background-color: transparent;*/
-/*    border: none;*/
-/*}*/
-
-/*.tweetLikesBtn:hover {*/
-/*    color: red;*/
-/*    -webkit-text-fill-color: red;*/
-/*    transition: all 0.5s ease;*/
-/*    cursor: pointer;*/
-/*}*/
-
 .tweetLikes:hover {
     color: red;
     -webkit-text-fill-color: red;
     transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.changeColorRetweets {
+    color: green;
+    margin-right: 20px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.changeColorRetweets > i {
+    color: green;
+    cursor: pointer;
+}
+
+.changeColorLikes {
+    color: red;
+    margin-right: 20px;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.changeColorLikes:hover {
+    color: red;
+    -webkit-text-fill-color: red;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.changeColorLikes > i {
+    color: red;
     cursor: pointer;
 }
 
@@ -141,4 +158,78 @@ i {
 .tweetText {
     margin: 0 0 10px 0;
     font-size: 21px;
+}
+
+/*5*/
+
+.list {
+    margin: 0 auto;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 500px;
+}
+
+.list-body {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.list-body > p {
+    font-weight: 800;
+    font-size: 19px;
+    font-family: Arial, sans-serif;
+    margin-bottom: 10px;
+}
+
+.list-avatar {
+    width: 165px;
+}
+
+.list-header {
+    color: #2b76fb;
+    font-family: 'Galada', sans-serif;
+    font-size: 45px;
+    text-align: center;
+}
+
+.fa-map-marker-alt {
+    color: green;
+    margin-right: 6px;
+    font-size: 19px;
+}
+
+.list-city {
+    font-weight: 600;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+}
+
+.list-icons {
+    display: inline-block;
+}
+
+.fab,
+.fa-envelope-square{
+    font-size: 33px;
+    margin: 10px 14px 0 0;
+    color: lightgray;
+    transition: all 0.3s ease;
+}
+
+.fa-facebook-square:hover {
+    transition: all 0.3s ease;
+    color: #2a508b;
+    cursor: pointer;
+}
+
+.fa-github-square:hover {
+    transition: all 0.3s ease;
+    color: black;
+    cursor: pointer;
+}
+
+.fa-envelope-square:hover {
+    transition: all 0.3s ease;
+    color: #9f0000;
+    cursor: pointer;
 }

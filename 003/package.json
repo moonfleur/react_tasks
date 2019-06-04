@@ -1,0 +1,25 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "react tasks",
+  "main": "main.js",
+  "dependencies": {
+    "http-server": "^0.11.1",
+    "react-card-flip": "^0.7.1",
+    "react-flippy": "^0.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonfleur/react_tasks.git"
+  },
+  "author": "Kateryna Kuzmenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moonfleur/react_tasks/issues"
+  },
+  "homepage": "https://github.com/moonfleur/react_tasks#readme"
+}
