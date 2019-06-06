@@ -195,8 +195,8 @@ i {
     border-radius: 23px;
     color: white;
     position: relative;
-    bottom: 23px;
-    right: 110px;
+    bottom: 80px;
+    left: 191px;
     cursor: pointer;
     transition: all 0.4s ease;
 }
@@ -229,9 +229,9 @@ i {
 
 .allCircles {
     width: 270px;
-    position: absolute;
-    top: 157px;
-    left: 300px;
+    position: relative;
+    bottom: 45px;
+    left: 350px;
 }
 
 .colorCircle {
@@ -247,4 +247,64 @@ i {
     position: relative;
     top: 8px;
     color: white;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.colors-list {
+    overflow: hidden;
+    position: relative;
+    left: 350px;
+    bottom: 47px;
+}
+
+.colors-list > div {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    float: left;
+    margin-right: 5px;
+}
+
+.radio-custom {
+    display: none;
+}
+
+.radio-custom-label {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.radio-custom + .radio-custom-label:before {
+    content: '';
+    background: transparent;
+    border-radius: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 17px;
+    height: 16px;
+    padding: 2px;
+    text-align: center;
+}
+
+.radio-custom:checked + .radio-custom-label:after {
+    content: "";
+    padding: 2px;
+    position: absolute;
+    width: 2px;
+    height: 7px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    top: 6px;
+    left: 9px;
 }
