@@ -50,7 +50,6 @@
 //     document.getElementById('root')
 // );
 
-
 //2
 // Используйте уже написанные компоненты и добавьте в него поиск по имени.
 // Поиск должен работать моментально: по мере ввода текста в поле для поиска, должен фильтроваться список.
@@ -362,274 +361,304 @@
 // );
 
 //4
-const Note = React.createClass ({
-    handleDelete() {
-        this.props.onDelete(this.props.id);
-    },
+// const Note = React.createClass ({
+//     handleDelete() {
+//         this.props.onDelete(this.props.id);
+//     },
+//
+//     render (){
+//         const {
+//             color,
+//             children
+//         } = this.props;
+//
+//         return (
+//             <div className="note" style={{backgroundColor: color}}>
+//                 <div>
+//                     <span className="delete_note" onClick={this.handleDelete}> x </span>
+//                 </div>
+//                 { children }
+//             </div>
+//         )
+//     },
+// });
+//
+// const NoteColors = React.createClass({
+//     render() {
+//         let colors = ['#E63462', '#FE5F55', '#8bef54', '#008536', '#00B4A6', '#007DB6', '#9c00ff'];
+//         return (
+//             <div className="colors-list">
+//                 {
+//                     colors.map((el, i) => {
+//                         return (
+//                             <div key={i} style={{backgroundColor: el}}>
+//                                 <input
+//                                     className="radio-custom"
+//                                     id={el}
+//                                     type="radio"
+//                                     name="color"
+//                                     onChange={(e)=>this.props.onColorChanged(e, el)}
+//                                 />
+//                                 <label className="radio-custom-label" htmlFor={el}/>
+//                             </div>
+//                         );
+//                     })
+//                 }
+//             </div>
+//         );
+//     }
+// });
+//
+// const NoteEditor = React.createClass ({
+//     getInitialState() {
+//         this._hadleColorChange = this.hadleColorChange.bind(this);
+//
+//         return {
+//             text: '',
+//             color: '',
+//             checked: false
+//         }
+//     },
+//
+//     handleTextChange(e) {
+//         this.setState({
+//             text: e.target.value
+//         });
+//     },
+//
+//     handleKeyPress(target) {
+//         if(target.charCode === 13){
+//             const newNote = {
+//                 text: this.state.text,
+//                 id: Date.now(),
+//                 color: this.state.color
+//             };
+//             this.props.onNoteAdd(newNote);
+//
+//             this.resetState();
+//         }
+//     },
+//
+//     handleNoteAdd() {
+//         const newNote = {
+//             text: this.state.text,
+//             id: Date.now(),
+//             color: this.state.color
+//         };
+//         this.props.onNoteAdd(newNote);
+//
+//         if(this.state.checked)
+//             this.input.checked = false;
+//
+//         this.resetState();
+//     },
+//
+//     hadleColorChange(e, color) {
+//         this.input = e.target;
+//         this.setState({
+//             color: color,
+//             checked: e.target.checked
+//         })
+//     },
+//
+//     resetState() {
+//         this.setState({
+//             text: '',
+//         });
+//     },
+//
+//     render (){
+//         return (
+//             <div className="editor">
+//                 <textarea
+//                     rows={5}
+//                     placeholder="Enter your note here..."
+//                     className="editor_textarea"
+//                     value={this.state.text}
+//                     onChange={this.handleTextChange}
+//                     onKeyPress={this.handleKeyPress}
+//                 />
+//
+//                 <div className="controls">
+//                     <NoteColors onColorChanged={this._hadleColorChange}/>
+//                 </div>
+//
+//                 {
+//                     // this.state.text
+//                     // &&
+//                     <button
+//                         className="editor_button"
+//                         onClick={this.handleNoteAdd}
+//                     >
+//                         Add
+//                     </button>
+//                 }
+//             </div>
+//         )
+//     },
+// });
+//
+// const NoteGrid = React.createClass ({
+//     componentDidMount() {
+//         this.msnry = new Masonry(this.grid, {
+//             columnWidth: 300,
+//             gutter: 10,
+//             isFitWidth: true
+//         })
+//     },
+//
+//     componentDidUpdate(prevProps) {
+//         if(prevProps.notes !== this.props.notes){
+//             this.msnry.reloadItems();
+//             this.msnry.layout();
+//         }
+//     },
+//
+//     render (){
+//         const {
+//             notes,
+//             onNoteDelete
+//         } = this.props;
+//
+//         return (
+//             <div className="grid" ref={c => this.grid = c}>
+//                 {
+//                     notes.map(note =>
+//                         <Note
+//                             key={note.id}
+//                             id={note.id}
+//                             color={note.color}
+//                             onDelete={onNoteDelete}
+//                         >
+//                             {note.text}
+//                         </Note>
+//                     )
+//                 }
+//             </div>
+//         )
+//     },
+// });
+//
+// const NotesApp = React.createClass ({
+//     getInitialState() {
+//         return {
+//             notes: []
+//         }
+//     },
+//
+//     componentDidMount() {
+//         const savedNotes = JSON.parse(localStorage.getItem('notes'));
+//
+//         if(savedNotes) {
+//             this.setState({ notes: savedNotes})
+//         }
+//     },
+//
+//     componentDidUpdate(prevProps, prevState) {
+//         if(prevState.notes !== this.state.notes) {
+//             this.saveToLocalStorage();
+//         }
+//     },
+//
+//     handleNoteAdd(newNote) {
+//         this.setState({
+//             notes: [newNote, ...this.state.notes]
+//         });
+//     },
+//
+//     handleNoteDelete(noteId) {
+//         this.setState({
+//             notes: this.state.notes.filter(note => note.id !== noteId)
+//         })
+//     },
+//
+//     saveToLocalStorage() {
+//         const notes = JSON.stringify(this.state.notes);
+//
+//         localStorage.setItem('notes', notes)
+//     },
+//
+//     render (){
+//         return (
+//             <div style={{textAlign: 'center'}} className="app">
+//                 <h1 className="app_header">NoteApp</h1>
+//
+//                 <NoteEditor onNoteAdd={this.handleNoteAdd}/>
+//
+//                 <NoteGrid
+//                     notes={this.state.notes}
+//                     onNoteDelete={this.handleNoteDelete}
+//                 />
+//             </div>
+//         )
+//     },
+// });
+//
+// ReactDOM.render (
+//     <NotesApp />,
+//     document.getElementById('root')
+// );
 
-    render (){
-        const {
-            color,
-            children
-        } = this.props;
-
-        return (
-            <div className="note" style={{backgroundColor: color}}>
-                <div>
-                    <span className="delete_note" onClick={this.handleDelete}> x </span>
-                </div>
-                { children }
-            </div>
-        )
-    },
-});
-
-const NoteSearch = React.createClass({
-    render() {
-        return (
-            <input className="noteSearch" type="search" placeholder="Search..." onChange={this.props.onSearch}/>
-        );
-    }
-});
-
-const NoteColors = React.createClass({
-    render() {
-        let colors = ['#E63462', '#FE5F55', '#8bef54', '#008536', '#00B4A6', '#007DB6', '#9c00ff'];
-        return (
-            <div className="colors-list">
-                {
-                    colors.map((el, i) => {
-                        return (
-                            <div key={i} style={{backgroundColor: el}}>
-                                <input
-                                    className="radio-custom"
-                                    id={el}
-                                    type="radio"
-                                    name="color"
-                                    onChange={(e)=>this.props.onColorChanged(e, el)}
-                                />
-                                <label className="radio-custom-label" htmlFor={el}/>
-                            </div>
-                        );
-                    })
-                }
-            </div>
-        );
-    }
-});
-
-const NoteEditor = React.createClass ({
+//5
+const TitleArticle = React.createClass ({
     getInitialState() {
-        this._hadleColorChange = this.hadleColorChange.bind(this);
-
         return {
-            text: '',
-            color: '',
-            checked: false
+            value: ''
         }
     },
 
-    handleTextChange(e) {
-        this.setState({
-            text: e.target.value
-        });
-    },
-
-    handleNoteAdd() {
-        const newNote = {
-            text: this.state.text,
-            id: Date.now(),
-            color: this.state.color
-        };
-        this.props.onNoteAdd(newNote);
-
-        if(this.state.checked)
-            this.input.checked = false;
-
-        this.resetState();
-    },
-
-    hadleColorChange(e, color) {
-        this.input = e.target;
-        this.setState({
-            color: color,
-            checked: e.target.checked
-        })
-    },
-
-    resetState() {
-        this.setState({
-            text: '',
-        });
+    handleChangeTitle(e) {
+        this.setState({ value: e.target.value})
     },
 
     render (){
         return (
-            <div className="editor">
-                <textarea
-                    rows={5}
-                    placeholder="Enter your note here..."
-                    className="editor_textarea"
-                    value={this.state.text}
-                    onChange={this.handleTextChange}
+            <div>
+                <h1 className="mainTitle">Create article title</h1>
+                <input
+                    className="articleTitle"
+                    type="text"
+                    onChange={this.handleChangeTitle}
+                    value={this.state.value}
                 />
-
-                <div className="controls">
-                    <NoteColors onColorChanged={this._hadleColorChange}/>
-                </div>
-
-                {
-                    // this.state.text
-                    // &&
-                    <button
-                        className="editor_button"
-                        onClick={this.handleNoteAdd}
-                    >
-                        Add
-                    </button>
-                }
             </div>
         )
     },
 });
 
-const NoteGrid = React.createClass ({
-    componentDidMount() {
-        this.msnry = new Masonry(this.grid, {
-            columnWidth: 300,
-            gutter: 10,
-            isFitWidth: true
-        })
-    },
-
-    componentDidUpdate(prevProps) {
-        if(prevProps.notes !== this.props.notes){
-            this.msnry.reloadItems();
-            this.msnry.layout();
-        }
-    },
-
-    render (){
-        const {
-            notes,
-            onNoteDelete
-        } = this.props;
-
-        return (
-            <div className="grid" ref={c => this.grid = c}>
-                {
-                    notes.map(note =>
-                        <Note
-                            key={note.id}
-                            id={note.id}
-                            color={note.color}
-                            onDelete={onNoteDelete}
-                        >
-                            {note.text}
-                        </Note>
-                    )
-                }
-            </div>
-        )
-    },
-});
-
-const NotesApp = React.createClass ({
+const CreateArticle = React.createClass ({
     getInitialState() {
         return {
-            notes: []
+            value: ''
         }
     },
 
-    componentDidMount() {
-        const savedNotes = JSON.parse(localStorage.getItem('notes'));
-
-        if(savedNotes) {
-            this.setState({ notes: savedNotes})
-        }
-    },
-
-    componentDidUpdate(prevProps, prevState) {
-        if(prevState.notes !== this.state.notes) {
-            this.saveToLocalStorage();
-        }
-    },
-
-    handleNoteAdd(newNote) {
-        this.setState({
-            notes: [newNote, ...this.state.notes]
-        });
-    },
-
-    handleNoteDelete(noteId) {
-        this.setState({
-            notes: this.state.notes.filter(note => note.id !== noteId)
-        })
-    },
-
-    saveToLocalStorage() {
-        const notes = JSON.stringify(this.state.notes);
-
-        localStorage.setItem('notes', notes)
+    onBtnClickHandler() {
+        alert(this.state.value);
     },
 
     render (){
         return (
-            <div style={{textAlign: 'center'}} className="app">
-                <h1 className="app_header">NoteApp</h1>
+            <div className="wrapperArticle">
+                <TitleArticle/>
+                {/*<TextArticle/>*/}
+                <button
+                    className="buttonAddArticle"
+                    onClick={this.onBtnClickHandler}
+                >
+                    Add new article
+                </button>
 
-                <NoteEditor onNoteAdd={this.handleNoteAdd}/>
-
-                <NoteGrid
-                    notes={this.state.notes}
-                    onNoteDelete={this.handleNoteDelete}
-                />
             </div>
         )
     },
 });
 
 ReactDOM.render (
-    <NotesApp />,
+    <CreateArticle />,
     document.getElementById('root')
 );
 
-
-
-
-
-
-
-
-
-
-
-    // render() {
-    //     let searchQuery = this.state.value.toLowerCase();
-    //     let displayedNotes = !this.state.value ? this.props.notes : this.props.notes.filter(function(item) {
-    //         let searchValue = item.about.toLowerCase();
-    //         return searchValue.indexOf(searchQuery) !== -1;
-    //     });
-    //     console.log(displayedNotes);
-    //     return (
-    //         <div>
-    //             <NoteSearch onSearch={this.handleSearch}/>
-    //             <div ref={(div) => this.grid = div} className="notes-grid">
-    //                 {
-    //                     displayedNotes.map((note) => {
-    //                         return (
-    //                             <Note
-    //                                 key={note.id}
-    //                                 color={note.color}
-    //                                 onDelete={this.props.onNoteDelete.bind(null, note)}
-    //                             >{note.about}</Note>
-    //                         );
-    //                     })
-    //                 }
-    //             </div>
-    //         </div>
-    //     );
-    // }
 
 
 
