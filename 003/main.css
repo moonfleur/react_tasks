@@ -322,9 +322,11 @@ i {
     font-family: 'Poppins', sans-serif;
     letter-spacing: 0.094em;
     text-align: center;
+    color: #B37B60;
 }
 
-.articleTitle {
+.articleTitle,
+.articleText {
     width: 500px;
     height: 30px;
     border: 1px solid gray;
@@ -334,10 +336,54 @@ i {
     padding: 5px 20px;
     letter-spacing: 0.094em;
     display: block;
-    margin: 0 auto;
+    margin: 20px auto;
+    color: #634536;
 }
 
-.buttonAddArticle {
+.article {
+    width: 500px;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.articles {
+    margin-top: 100px;
+}
+
+.articlesCount {
+    display: block;
+    margin: 20px 181px;
+    padding: 0 20px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #B37B60;
+}
+
+.articlesTitle {
+    color: #B37B60;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    text-align: justify;
+}
+
+.article__big-text {
+    color: #634536;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    text-align: justify;
+}
+
+.articleText {
+    height: 200px;
+}
+
+.buttonAddArticle,
+.articleRead {
     border-radius: 50px;
     background: #00c9b7;
     font-size: 14px;
@@ -354,4 +400,23 @@ i {
     border: none;
     color: white;
     display: block;
+    transition: all 0.3s ease;
 }
+
+.buttonAddArticle:hover {
+    background: #9af5ee;
+    transition: all 0.3s ease;
+}
+
+.articleRead {
+    width: 150px;
+    height: 24px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.articleRead:hover {
+    background: #9af5ee;
+    transition: all 0.3s ease;
+}
+

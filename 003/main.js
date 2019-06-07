@@ -1,3 +1,4 @@
+
 //1
 // Работать должно так. Вначале по центру экрана маленький круг (цвет на ваше усмотрение). При каждом клике на него, он увеличивается в размере. Так пока не достигнет максимального. Потом сначала.
 // Используйте только только inline-стили в этом задании.
@@ -600,6 +601,89 @@
 // );
 
 //5
+const myNews = [
+    {
+        id: 1,
+        title: 'Democratic Candidates Woo Silicon Valley for Donations, Then Bash It.',
+        bigText: 'Until recently big tech companies were seen as one of the few relatively untainted sources of big-money donations for Democrats. Now, that’s changing.'
+    },
+    {
+        id: 2,
+        title: 'Tech Giants Amass a Lobbying Army for an Epic Washington Battle',
+        bigText: 'Amazon, Apple, Facebook and Google, facing the growing possibility of antitrust action and legislation to rein in their power, are spending freely to gain influence and access.'
+    },
+    {
+        id: 3,
+        title: 'Election Rules Are an Obstacle to Cybersecurity of Presidential Campaigns',
+        bigText: 'Security experts warn that time is running out for campaigns to create protections against the cyberattacks and disinformation seen in recent elections.'
+    },
+    {
+        id: 4,
+        title: 'In China, a Viral Video Sets Off a Challenge to Rape Culture',
+        bigText: 'The images were meant to exonerate Richard Liu, the e-commerce mogul. They have also helped fuel a nascent #NoPerfectVictim movement.'
+    }
+];
+
+const News = React.createClass ({
+    renderNews() {
+        const { data } = this.props;
+        let newsTemplate = null;
+
+        if (data.length) {
+            newsTemplate = data.map(function(item) {
+                return <Article key={item.id} data={item}/>
+            })
+        } else {
+            newsTemplate = <p>No fresh articles</p>
+        }
+
+        return newsTemplate
+    },
+
+    render() {
+        const { data } = this.props;
+
+        return (
+            <div className='articles'>
+                <h1 className="mainTitle">Latest articles</h1>
+                {this.renderNews()}
+                {
+                    data.length ? <h6 className={'articlesCount'}>Article quantity: {data.length}</h6> : null
+                }
+            </div>
+        );
+    }
+});
+
+const Article = React.createClass({
+    getInitialState() {
+      return {
+          visible: false
+      }
+    },
+
+    handleReadMoreClck(e) {
+        e.preventDefault();
+        this.setState({ visible: true })
+    },
+
+    render() {
+        const { title, bigText } = this.props.data;
+        const { visible } = this.state;
+        return (
+            <div className='article'>
+                <p className='articlesTitle'>{title}</p>
+                {
+                    !visible && <a onClick={this.handleReadMoreClck} href="#" className='articleRead'>Read</a>
+                }
+                {
+                    visible && <p className='article__big-text'>{bigText}</p>
+                }
+            </div>
+        )
+    }
+});
+
 const TitleArticle = React.createClass ({
     getInitialState() {
         return {
@@ -611,15 +695,46 @@ const TitleArticle = React.createClass ({
         this.setState({ value: e.target.value})
     },
 
+     handleAddNews(data) {
+         const nextNews = [data, ...this.state.news];
+         this.setState({ news: nextNews })
+     },
+
     render (){
         return (
             <div>
-                <h1 className="mainTitle">Create article title</h1>
+                <h1 className="mainTitle">Create article</h1>
                 <input
                     className="articleTitle"
                     type="text"
                     onChange={this.handleChangeTitle}
                     value={this.state.value}
+                    placeholder="Enter article title"
+                />
+            </div>
+        )
+    },
+});
+
+const TextArticle = React.createClass ({
+    getInitialState() {
+        return {
+            value: ''
+        }
+    },
+
+    handleChangeText(e) {
+        this.setState({ value: e.currentTarget.value})
+    },
+
+    render (){
+        return (
+            <div>
+                <textarea
+                    className="articleText"
+                    onChange={this.handleChangeText}
+                    value={this.state.value}
+                    placeholder="Enter article text"
                 />
             </div>
         )
@@ -629,30 +744,42 @@ const TitleArticle = React.createClass ({
 const CreateArticle = React.createClass ({
     getInitialState() {
         return {
-            value: ''
+            value: '',
+            news: myNews
         }
     },
 
-    onBtnClickHandler() {
-        alert(this.state.value);
+    onBtnClickHandler(e) {
+        e.preventDefault();
+        const { title, bigText } = this.state;
+        this.props.onAddNews({
+            id: +new Date(),
+            title: title,
+            bigText,
+        })
     },
 
     render (){
         return (
             <div className="wrapperArticle">
                 <TitleArticle/>
-                {/*<TextArticle/>*/}
+                <TextArticle/>
                 <button
                     className="buttonAddArticle"
                     onClick={this.onBtnClickHandler}
                 >
                     Add new article
                 </button>
-
+                <News data={this.state.news}/>
             </div>
         )
     },
 });
+
+CreateArticle.propTypes = {
+    onAddNews: PropTypes.func.isRequired,
+};
+
 
 ReactDOM.render (
     <CreateArticle />,

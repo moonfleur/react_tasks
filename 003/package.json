@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "http-server": "^0.11.1",
+    "prop-types": "^15.7.2",
     "react-card-flip": "^0.7.1",
     "react-flippy": "^0.1.2"
   },
