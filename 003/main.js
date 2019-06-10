@@ -601,28 +601,26 @@
 // );
 
 //5
-const myNews = [
-    {
-        id: 1,
-        title: 'Democratic Candidates Woo Silicon Valley for Donations, Then Bash It.',
-        bigText: 'Until recently big tech companies were seen as one of the few relatively untainted sources of big-money donations for Democrats. Now, that’s changing.'
-    },
-    {
-        id: 2,
-        title: 'Tech Giants Amass a Lobbying Army for an Epic Washington Battle',
-        bigText: 'Amazon, Apple, Facebook and Google, facing the growing possibility of antitrust action and legislation to rein in their power, are spending freely to gain influence and access.'
-    },
-    {
-        id: 3,
-        title: 'Election Rules Are an Obstacle to Cybersecurity of Presidential Campaigns',
-        bigText: 'Security experts warn that time is running out for campaigns to create protections against the cyberattacks and disinformation seen in recent elections.'
-    },
-    {
-        id: 4,
-        title: 'In China, a Viral Video Sets Off a Challenge to Rape Culture',
-        bigText: 'The images were meant to exonerate Richard Liu, the e-commerce mogul. They have also helped fuel a nascent #NoPerfectVictim movement.'
-    }
-];
+let md = new Remarkable();
+
+md = new Remarkable('full', {
+    html: true,
+    linkify: true,
+    typographer: true,
+});
+
+md.core.ruler.enable([ 'replacements', 'smartquotes' ]);
+md.block.ruler.enable([
+    'footnote',
+    'deflist'
+]);
+md.inline.ruler.enable([
+    'footnote_inline',
+    'ins',
+    'mark',
+    'sub',
+    'sup'
+]);
 
 const News = React.createClass ({
     renderNews() {
@@ -765,6 +763,13 @@ const Add = React.createClass( {
                 >
                     Add new article
                 </button>
+                <div className="articles">
+                    <h1 className="mainTitle">Article preview</h1>
+                    <div className="article">
+                        <p className="articlesTitle">{title}</p>
+                        <p className="article__big-text">{bigText}</p>
+                    </div>
+                </div>
             </form>
         )
     }
@@ -816,10 +821,10 @@ const CreateArticle = React.createClass ({
     },
 
     render (){
-        const {onNoteDelete} = this.props;
+         // const {onNoteDelete} = this.props;
         return (
             <div className="wrapperArticle">
-                <Article onDelete={onNoteDelete}/>
+                {/*<Article onDelete={onNoteDelete}/>*/}
                 <Add
                     onAddNews={this.handleAddNews}
                     onNoteDelete={this.handleArticleDelete}

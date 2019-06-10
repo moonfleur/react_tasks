@@ -338,6 +338,7 @@ i {
     display: block;
     margin: 20px auto;
     color: #634536;
+    resize: none;
 }
 
 .article {
@@ -431,5 +432,10 @@ i {
 .articleRead:hover {
     background: #9af5ee;
     transition: all 0.3s ease;
+}
+
+.readHideDelete {
+    display: flex;
+    justify-content: space-between;
 }
 
