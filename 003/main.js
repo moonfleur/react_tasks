@@ -634,7 +634,10 @@ const News = React.createClass ({
                 return <Article key={item.id} data={item}/>
             })
         } else {
-            newsTemplate = <p>No fresh articles</p>
+            newsTemplate =
+                <div className="wrapperPar">
+                    <p className="newsArticle">No fresh articles</p>
+                </div>
         }
 
         return newsTemplate
@@ -658,13 +661,22 @@ const News = React.createClass ({
 const Article = React.createClass({
     getInitialState() {
       return {
-          visible: false
+          visible: false,
       }
     },
 
-    handleReadMoreClck(e) {
+    handleReadMoreClick(e) {
         e.preventDefault();
         this.setState({ visible: true })
+    },
+
+    handleHideClick(e) {
+        e.preventDefault();
+        this.setState({ visible: false })
+    },
+
+    handleDelete() {
+        this.props.onDelete(this.props.id);
     },
 
     render() {
@@ -674,112 +686,149 @@ const Article = React.createClass({
             <div className='article'>
                 <p className='articlesTitle'>{title}</p>
                 {
-                    !visible && <a onClick={this.handleReadMoreClck} href="#" className='articleRead'>Read</a>
+                    !visible &&
+                    <div>
+                        <a onClick={this.handleReadMoreClick} href="#" className='articleRead'>Read</a>
+                        <a onClick={this.handleDelete} href="#" className='articleRead'>Delete</a>
+                    </div>
                 }
                 {
-                    visible && <p className='article__big-text'>{bigText}</p>
+                    visible &&
+                    <div>
+                        <p className='article__big-text'>{bigText}</p>
+                        <a onClick={this.handleHideClick} href="#" className='articleRead'>Hide</a>
+                        <a onClick={this.handleDelete} href="#" className='articleRead'>Delete</a>
+                    </div>
                 }
             </div>
         )
     }
 });
 
-const TitleArticle = React.createClass ({
-    getInitialState() {
-        return {
-            value: ''
-        }
-    },
-
-    handleChangeTitle(e) {
-        this.setState({ value: e.target.value})
-    },
-
-     handleAddNews(data) {
-         const nextNews = [data, ...this.state.news];
-         this.setState({ news: nextNews })
-     },
-
-    render (){
-        return (
-            <div>
-                <h1 className="mainTitle">Create article</h1>
-                <input
-                    className="articleTitle"
-                    type="text"
-                    onChange={this.handleChangeTitle}
-                    value={this.state.value}
-                    placeholder="Enter article title"
-                />
-            </div>
-        )
-    },
-});
-
-const TextArticle = React.createClass ({
-    getInitialState() {
-        return {
-            value: ''
-        }
-    },
-
-    handleChangeText(e) {
-        this.setState({ value: e.currentTarget.value})
-    },
-
-    render (){
-        return (
-            <div>
-                <textarea
-                    className="articleText"
-                    onChange={this.handleChangeText}
-                    value={this.state.value}
-                    placeholder="Enter article text"
-                />
-            </div>
-        )
-    },
-});
-
-const CreateArticle = React.createClass ({
+const Add = React.createClass( {
     getInitialState() {
         return {
             value: '',
-            news: myNews
+            title: '',
+            bigText: ''
         }
     },
 
-    onBtnClickHandler(e) {
+    onBtnClickHandler (e) {
         e.preventDefault();
-        const { title, bigText } = this.state;
+        const { title, bigText, value } = this.state;
         this.props.onAddNews({
             id: +new Date(),
             title: title,
             bigText,
-        })
+            value
+        });
+
+        this.resetState();
     },
 
-    render (){
+    resetState() {
+        this.setState({
+            title: '',
+            bigText: ''
+        });
+    },
+
+    handleChange(e) {
+        const { id, value } = e.currentTarget;
+        this.setState({ [id]: e.currentTarget.value })
+    },
+
+    render() {
+        const { title, bigText } = this.state;
         return (
-            <div className="wrapperArticle">
-                <TitleArticle/>
-                <TextArticle/>
+            <form className='add'>
+                <h1 className="mainTitle">Create article</h1>
+                <input
+                    id='title'
+                    className="articleTitle"
+                    type="text"
+                    onChange={this.handleChange}
+                    value={title}
+                    placeholder="Enter article title"
+                />
+                <textarea
+                    id='bigText'
+                    className="articleText"
+                    onChange={this.handleChange}
+                    value={bigText}
+                    placeholder="Enter article text"
+                />
                 <button
                     className="buttonAddArticle"
                     onClick={this.onBtnClickHandler}
                 >
                     Add new article
                 </button>
+            </form>
+        )
+    }
+});
+
+Add.propTypes = {
+    onAddNews: PropTypes.func.isRequired,
+};
+
+const CreateArticle = React.createClass ({
+    getInitialState() {
+        return {
+            value: '',
+            news: [],
+            title: '',
+            bigText: ''
+        }
+    },
+
+    handleArticleDelete(articleId) {
+        this.setState({
+            news: this.state.news.filter(news => news.id !== articleId)
+        })
+    },
+
+    componentDidMount() {
+        const savedArticles = JSON.parse(localStorage.getItem('articles'));
+
+        if(savedArticles) {
+            this.setState({ news: savedArticles})
+        }
+    },
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.news !== this.state.news) {
+            this.saveToLocalStorage();
+        }
+    },
+
+   saveToLocalStorage() {
+        const articles = JSON.stringify(this.state.news);
+
+        localStorage.setItem('articles', articles)
+    },
+
+    handleAddNews(data) {
+        const nextNews = [data, ...this.state.news];
+        this.setState({ news: nextNews })
+    },
+
+    render (){
+        const {onNoteDelete} = this.props;
+        return (
+            <div className="wrapperArticle">
+                <Article onDelete={onNoteDelete}/>
+                <Add
+                    onAddNews={this.handleAddNews}
+                    onNoteDelete={this.handleArticleDelete}
+                />
                 <News data={this.state.news}/>
             </div>
         )
     },
 });
-
-CreateArticle.propTypes = {
-    onAddNews: PropTypes.func.isRequired,
-};
-
 
 ReactDOM.render (
     <CreateArticle />,

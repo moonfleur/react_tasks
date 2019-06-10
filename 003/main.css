@@ -371,6 +371,12 @@ i {
     text-align: justify;
 }
 
+.wrapperPar {
+    width: 500px;
+    display: block;
+    margin: 0 auto;
+}
+
 .article__big-text {
     color: #634536;
     font-size: 15px;
@@ -380,6 +386,13 @@ i {
 
 .articleText {
     height: 200px;
+}
+
+.newsArticle {
+    color: #B37B60;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
 }
 
 .buttonAddArticle,
