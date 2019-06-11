@@ -233,7 +233,7 @@
 // );
 
 
-//2
+//4
 // Используйте уже написанные компоненты и добавьте в него поиск по имени.
 // Поиск должен работать моментально: по мере ввода текста в поле для поиска, должен фильтроваться список.
 // const MEMBERS = [
@@ -361,7 +361,7 @@
 //     document.getElementById('root')
 // );
 
-//4
+//5
 // const Note = React.createClass ({
 //     handleDelete() {
 //         this.props.onDelete(this.props.id);
@@ -601,9 +601,7 @@
 // );
 
 //5
-let md = new Remarkable();
-
-md = new Remarkable('full', {
+let md = new Remarkable('full', {
     html: true,
     linkify: true,
     typographer: true,
@@ -624,13 +622,19 @@ md.inline.ruler.enable([
 
 const News = React.createClass ({
     renderNews() {
-        const { data } = this.props;
+        const { data, onNoteDelete } = this.props;
         let newsTemplate = null;
 
         if (data.length) {
-            newsTemplate = data.map(function(item) {
-                return <Article key={item.id} data={item}/>
-            })
+            newsTemplate = data.map((item) =>
+                <Article
+                    key={item.id}
+                    title={item.title}
+                    bigText={item.bigText}
+                    onDelete={onNoteDelete}
+                    data={item}
+                />
+                )
         } else {
             newsTemplate =
                 <div className="wrapperPar">
@@ -660,6 +664,7 @@ const Article = React.createClass({
     getInitialState() {
       return {
           visible: false,
+          // edit: false
       }
     },
 
@@ -703,7 +708,78 @@ const Article = React.createClass({
     }
 });
 
-const Add = React.createClass( {
+// const Edit = React.createClass({
+//     getInitialState() {
+//         return {
+//             data: this.props.data,
+//             preview: false
+//         }
+//     },
+//
+//     _handlePreviewClick(e) {
+//         e.preventDefault();
+//         this.setState({ preview: true });
+//     },
+//
+//     _handleEditClick(e) {
+//         e.preventDefault();
+//         this.setState({ preview: false });
+//     },
+//
+//     _renderPreview() {
+//         if (this._text) {
+//             let htmlText = () => ({ __html: this._text.value });
+//             return (
+//                 <div>
+//                     <div className="preview-box">
+//                         <span className="preview-title">Preview</span>
+//                         <div dangerouslySetInnerHTML={htmlText()}></div>
+//                     </div>
+//                     <button onClick={this._handleEditClick}>
+//                         Edit
+//                     </button>
+//                 </div>
+//             );
+//         }
+//         return null;
+//     },
+//
+//     render() {
+//
+//         let editStyle = {};
+//         if (!this.state.preview)
+//             editStyle.display = 'block';
+//         else
+//             editStyle.display = 'none';
+//
+//         let previewStyle = {};
+//         if (this.state.preview)
+//             previewStyle.display = 'block';
+//         else previewStyle.display = 'none';
+//         return (
+//             <div>
+//                 <h1>{this.state.data.title}</h1>
+//                 <form>
+//                     <div style={editStyle}>
+//             <textarea
+//                 ref={f => this._text = f}
+//                 defaultValue={this.state.data.text}
+//                 className="textarea">
+//             </textarea>
+//                         <button onClick={this._handlePreviewClick}>
+//                             Preview
+//                         </button>
+//                     </div>
+//                     <div style={previewStyle}>
+//                         {this._renderPreview()}
+//                     </div>
+//                 </form>
+//             </div>
+//         );
+//     }
+// });
+
+const CreateArticle = React.createClass( {
     getInitialState() {
         return {
             value: '',
@@ -754,7 +830,7 @@ const Add = React.createClass( {
                     id='bigText'
                     className="articleText"
                     onChange={this.handleChange}
-                    value={bigText}
+                    value={md.render(bigText)}
                     placeholder="Enter article text"
                 />
                 <button
@@ -775,11 +851,11 @@ const Add = React.createClass( {
     }
 });
 
-Add.propTypes = {
-    onAddNews: PropTypes.func.isRequired,
-};
+// Add.propTypes = {
+//     onAddNews: PropTypes.func.isRequired,
+// };
 
-const CreateArticle = React.createClass ({
+const ViewArticles = React.createClass ({
     getInitialState() {
         return {
             value: '',
@@ -791,7 +867,7 @@ const CreateArticle = React.createClass ({
 
     handleArticleDelete(articleId) {
         this.setState({
-            news: this.state.news.filter(news => news.id !== articleId)
+            news: this.state.news.filter(article => article.id !== articleId)
         })
     },
 
@@ -821,11 +897,10 @@ const CreateArticle = React.createClass ({
     },
 
     render (){
-         // const {onNoteDelete} = this.props;
+        const {onNoteDelete, news} = this.props;
         return (
             <div className="wrapperArticle">
-                {/*<Article onDelete={onNoteDelete}/>*/}
-                <Add
+                <CreateArticle
                     onAddNews={this.handleAddNews}
                     onNoteDelete={this.handleArticleDelete}
                 />
@@ -836,11 +911,7 @@ const CreateArticle = React.createClass ({
 });
 
 ReactDOM.render (
-    <CreateArticle />,
+    <ViewArticles />,
     document.getElementById('root')
 );
-
-
-
-
 
