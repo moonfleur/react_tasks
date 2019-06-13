@@ -438,3 +438,12 @@ i {
     justify-content: space-between;
 }
 
+.btn-primary {
+    margin: 0 15px;
+    background-color: #00c9b7;
+}
+
+.btn-danger {
+    background-color: red;
+}
+

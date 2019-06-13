@@ -601,317 +601,775 @@
 // );
 
 //5
-let md = new Remarkable('full', {
-    html: true,
-    linkify: true,
-    typographer: true,
-});
-
-md.core.ruler.enable([ 'replacements', 'smartquotes' ]);
-md.block.ruler.enable([
-    'footnote',
-    'deflist'
-]);
-md.inline.ruler.enable([
-    'footnote_inline',
-    'ins',
-    'mark',
-    'sub',
-    'sup'
-]);
-
-const News = React.createClass ({
-    renderNews() {
-        const { data, onNoteDelete } = this.props;
-        let newsTemplate = null;
-
-        if (data.length) {
-            newsTemplate = data.map((item) =>
-                <Article
-                    key={item.id}
-                    title={item.title}
-                    bigText={item.bigText}
-                    onDelete={onNoteDelete}
-                    data={item}
-                />
-                )
-        } else {
-            newsTemplate =
-                <div className="wrapperPar">
-                    <p className="newsArticle">No fresh articles</p>
-                </div>
-        }
-
-        return newsTemplate
-    },
-
-    render() {
-        const { data } = this.props;
-
-        return (
-            <div className='articles'>
-                <h1 className="mainTitle">Latest articles</h1>
-                {this.renderNews()}
-                {
-                    data.length ? <h6 className={'articlesCount'}>Article quantity: {data.length}</h6> : null
-                }
-            </div>
-        );
-    }
-});
-
-const Article = React.createClass({
-    getInitialState() {
-      return {
-          visible: false,
-          // edit: false
-      }
-    },
-
-    handleReadMoreClick(e) {
-        e.preventDefault();
-        this.setState({ visible: true })
-    },
-
-    handleHideClick(e) {
-        e.preventDefault();
-        this.setState({ visible: false })
-    },
-
-    handleDelete() {
-        this.props.onDelete(this.props.id);
-    },
-
-    render() {
-        const { title, bigText } = this.props.data;
-        const { visible } = this.state;
-        return (
-            <div className='article'>
-                <p className='articlesTitle'>{title}</p>
-                {
-                    !visible &&
-                    <div>
-                        <a onClick={this.handleReadMoreClick} href="#" className='articleRead'>Read</a>
-                        <a onClick={this.handleDelete} href="#" className='articleRead'>Delete</a>
-                    </div>
-                }
-                {
-                    visible &&
-                    <div>
-                        <p className='article__big-text'>{bigText}</p>
-                        <a onClick={this.handleHideClick} href="#" className='articleRead'>Hide</a>
-                        <a onClick={this.handleDelete} href="#" className='articleRead'>Delete</a>
-                    </div>
-                }
-            </div>
-        )
-    }
-});
-
-// const Edit = React.createClass({
-//     getInitialState() {
-//         return {
-//             data: this.props.data,
-//             preview: false
-//         }
-//     },
+// let md = new Remarkable('full', {
+//     html: true,
+//     linkify: true,
+//     typographer: true,
+// });
 //
-//     _handlePreviewClick(e) {
-//         e.preventDefault();
-//         this.setState({ preview: true });
-//     },
+// md.core.ruler.enable([ 'replacements', 'smartquotes' ]);
+// md.block.ruler.enable([
+//     'footnote',
+//     'deflist'
+// ]);
+// md.inline.ruler.enable([
+//     'footnote_inline',
+//     'ins',
+//     'mark',
+//     'sub',
+//     'sup'
+// ]);
+
+// const News = React.createClass ({
+//     renderNews() {
+//         const { data, onNoteDelete } = this.props;
+//         let newsTemplate = null;
 //
-//     _handleEditClick(e) {
-//         e.preventDefault();
-//         this.setState({ preview: false });
-//     },
-//
-//     _renderPreview() {
-//         if (this._text) {
-//             let htmlText = () => ({ __html: this._text.value });
-//             return (
-//                 <div>
-//                     <div className="preview-box">
-//                         <span className="preview-title">Preview</span>
-//                         <div dangerouslySetInnerHTML={htmlText()}></div>
-//                     </div>
-//                     <button onClick={this._handleEditClick}>
-//                         Edit
-//                     </button>
+//         if (data.length) {
+//             newsTemplate = data.map((item) =>
+//                 <Article
+//                     key={item.id}
+//                     title={item.title}
+//                     bigText={item.bigText}
+//                     onDelete={onNoteDelete}
+//                     data={item}
+//                 />
+//                 )
+//         } else {
+//             newsTemplate =
+//                 <div className="wrapperPar">
+//                     <p className="newsArticle">No fresh articles</p>
 //                 </div>
-//             );
 //         }
-//         return null;
+//
+//         return newsTemplate
 //     },
 //
 //     render() {
+//         const { data } = this.props;
 //
-//         let editStyle = {};
-//         if (!this.state.preview)
-//             editStyle.display = 'block';
-//         else
-//             editStyle.display = 'none';
-//
-//         let previewStyle = {};
-//         if (this.state.preview)
-//             previewStyle.display = 'block';
-//         else previewStyle.display = 'none';
 //         return (
-//             <div>
-//                 <h1>{this.state.data.title}</h1>
-//                 <form>
-//                     <div style={editStyle}>
-//             <textarea
-//                 ref={f => this._text = f}
-//                 defaultValue={this.state.data.text}
-//                 className="textarea">
-//             </textarea>
-//                         <button onClick={this._handlePreviewClick}>
-//                             Preview
-//                         </button>
-//                     </div>
-//                     <div style={previewStyle}>
-//                         {this._renderPreview()}
-//                     </div>
-//                 </form>
+//             <div className='articles'>
+//                 <h1 className="mainTitle">Latest articles</h1>
+//                 {this.renderNews()}
+//                 {
+//                     data.length ? <h6 className={'articlesCount'}>Article quantity: {data.length}</h6> : null
+//                 }
 //             </div>
 //         );
 //     }
 // });
+//
+// const Article = React.createClass({
+//     getInitialState() {
+//       return {
+//           visible: false,
+//           isEditing: false,
+//           value: '',
+//           title: this.props.data
+//       }
+//     },
+//
+//     handleReadMoreClick(e) {
+//         e.preventDefault();
+//         this.setState({ visible: true })
+//     },
+//
+//     handleHideClick(e) {
+//         e.preventDefault();
+//         this.setState({ visible: false })
+//     },
+//
+//     handleDelete() {
+//         this.props.onDelete(this.props.id);
+//     },
+//
+//     startEditing() {
+//         this.setState({ isEditing: true });
+//     },
+//
+//     render() {
+//         const { title, bigText } = this.props.data;
+//         const { visible, value, isEditing } = this.state;
+//
+//         if (isEditing) {
+//
+//         } else {
+//             return (
+//                 <div className='article'>
+//                     <p className='articlesTitle'>{title}</p>
+//                     {
+//                         !visible &&
+//                         <div>
+//                             <a onClick={this.handleReadMoreClick} href="#" className='articleRead'>Read</a>
+//                             <a onClick={this.handleDelete} href="#" className='articleRead'>Delete</a>
+//                             <a onClick={this.startEditing} href="#" className='articleRead'>Edit</a>
+//                         </div>
+//                     }
+//                     {
+//                         visible &&
+//                         <div>
+//                             <p className='article__big-text'>{bigText}</p>
+//                             <a onClick={this.handleHideClick} href="#" className='articleRead'>Hide</a>
+//                             <a onClick={this.handleDelete} href="#" className='articleRead'>Delete</a>
+//                         </div>
+//                     }
+//                 </div>
+//             )
+//         }
+//     }
+// });
+//
+// const CreateArticle = React.createClass( {
+//     getInitialState() {
+//         return {
+//             value: '',
+//             title: '',
+//             bigText: ''
+//         }
+//     },
+//
+//     onBtnClickHandler (e) {
+//         e.preventDefault();
+//         const { title, bigText, value } = this.state;
+//         this.props.onAddNews({
+//             id: +new Date(),
+//             title: title,
+//             bigText,
+//             value
+//         });
+//
+//         this.resetState();
+//     },
+//
+//     resetState() {
+//         this.setState({
+//             title: '',
+//             bigText: ''
+//         });
+//     },
+//
+//     handleChange(e) {
+//         const { id, value } = e.currentTarget;
+//         this.setState({ [id]: e.currentTarget.value })
+//     },
+//
+//     render() {
+//         const { title, bigText } = this.state;
+//         return (
+//             <form className='add'>
+//                 <h1 className="mainTitle">Create article</h1>
+//                 <input
+//                     id='title'
+//                     className="articleTitle"
+//                     type="text"
+//                     onChange={this.handleChange}
+//                     value={title}
+//                     placeholder="Enter article title"
+//                 />
+//                 <textarea
+//                     id='bigText'
+//                     className="articleText"
+//                     onChange={this.handleChange}
+//                     value={bigText}
+//                     placeholder="Enter article text"
+//                 />
+//                 <button
+//                     className="buttonAddArticle"
+//                     onClick={this.onBtnClickHandler}
+//                 >
+//                     Add new article
+//                 </button>
+//                 <div className="articles">
+//                     <h1 className="mainTitle">Article preview</h1>
+//                     <div className="article">
+//                         <p className="articlesTitle">{title}</p>
+//                         <p className="article__big-text">{bigText}</p>
+//                     </div>
+//                 </div>
+//             </form>
+//         )
+//     }
+// });
+//
+// // Add.propTypes = {
+// //     onAddNews: PropTypes.func.isRequired,
+// // };
+//
+// const ViewArticles = React.createClass ({
+//     getInitialState() {
+//         return {
+//             value: '',
+//             news: [],
+//             title: '',
+//             bigText: ''
+//         }
+//     },
+//
+//     handleArticleDelete(articleId) {
+//         this.setState({
+//             news: this.state.news.filter(article => article.id !== articleId)
+//         })
+//     },
+//
+//     componentDidMount() {
+//         const savedArticles = JSON.parse(localStorage.getItem('articles'));
+//
+//         this.setState({ news: savedArticles})
+//
+//     },
+//
+//     componentDidUpdate(prevProps, prevState) {
+//         if(prevState.news !== this.state.news) {
+//             this.saveToLocalStorage();
+//         }
+//     },
+//
+//    saveToLocalStorage() {
+//         const articles = JSON.stringify(this.state.news);
+//
+//         localStorage.setItem('articles', articles)
+//     },
+//
+//     handleAddNews(data) {
+//         const nextNews = [data, ...this.state.news];
+//         this.setState({ news: nextNews })
+//     },
+//
+//     render (){
+//         // const {onNoteDelete, news} = this.props;
+//         return (
+//             <div className="wrapperArticle">
+//                 <CreateArticle
+//                     onAddNews={this.handleAddNews}
+//                 />
+//                 <News
+//                     data={this.state.news}
+//                     onNoteDelete={this.handleArticleDelete}
+//                 />
+//             </div>
+//         )
+//     },
+// });
+// ReactDOM.render (
+//     <ViewArticles />,
+//     document.getElementById('root')
+// );
 
-const CreateArticle = React.createClass( {
-    getInitialState() {
-        return {
-            value: '',
-            title: '',
-            bigText: ''
+// class AddFormData extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = { textName: '', textArea: '' };
+//         this.onFormSubmit = this.onFormSubmit.bind(this);
+//         this.textNameChange = this.textNameChange.bind(this);
+//         this.textDescChange = this.textDescChange.bind(this);
+//         this.cancelUpd = this.cancelUpd.bind(this);
+//     }
+//
+//     componentWillReceiveProps(nextProps){
+//         if (nextProps.upd.id) {
+//             this.setState({
+//                 textName: nextProps.upd.name,
+//                 textArea: nextProps.upd.desc
+//             });
+//         }else{
+//             this.setState({ textName:'', textArea: '' });
+//         }
+//     }
+//
+//     textNameChange(e){ this.setState({ textName: e.target.value }) }
+//     textDescChange(e){ this.setState({ textArea: e.target.value }) }
+//
+//     onFormSubmit(e) {
+//         e.preventDefault();
+//         if (this.props.upd.id) {
+//             // update component
+//             this.props.propUpd({
+//                 id: this.props.upd.id,
+//                 name: this.state.textName,
+//                 desc: this.state.textArea
+//             });
+//         } else {
+//             var formVal = {
+//                 name: this.state.textName,
+//                 area: this.state.textArea
+//             };
+//             this.props.onAdd(formVal);
+//         }
+//         this.setState({ textName:'', textArea: '' });
+//     }
+//     cancelUpd() {
+//         this.props.updcan();
+//         this.setState({ textName:'', textArea: '' });
+//     }
+//
+//     render() {
+//         return (
+//             <form onSubmit={ this.onFormSubmit } className='well'>
+//                 <h1 className="mainTitle">{ this.props.upd.id ? 'Edit article':'Create article' }</h1>
+//                 <div className='form-group'>
+//                     <label>Title</label>
+//                     <input type='text' className='form-control'
+//                            onChange={ this.textNameChange }
+//                            value={ this.state.textName  } />
+//                 </div>
+//                 <div className='form-group'>
+//                     <label>Article text</label>
+//                     <textarea className="form-control" rows="3"
+//                               onChange={ this.textDescChange }
+//                               value={ this.state.textArea }
+//                     />
+//                 </div>
+//                 <button type="submit" className="btn btn-success">
+//                     { this.props.upd.id ? 'Save changes': 'Create' }
+//                 </button>&nbsp;
+//                 {
+//                     this.props.upd.id ?
+//                         (<button type="button"
+//                                  onClick={ this.cancelUpd }
+//                                  className="btn btn-default" >Cancel</button>
+//                         ):null
+//                 }
+//             </form>
+//         );
+//     }
+// }
+//
+// class TableBody extends React.Component {
+//     constructor(props, context) {
+//         super(props, context);
+//         this.state = { isToggleOn: false };
+//         this.updateBtn = this.updateBtn.bind(this);
+//         this.handleCbox = this.handleCbox.bind(this);
+//     }
+//
+//     updateBtn(e) {
+//         this.props.onUpd( e.target.dataset.item );
+//     }
+//
+//     handleCbox() {
+//         this.setState(prevState => ({
+//             isToggleOn: !prevState.isToggleOn
+//         }));
+//         var cnt = $('#tableSample').find('input:checkbox[name=cbox]:checked');
+//         if (cnt.length) {
+//             $('#del_rowBtn').show();
+//         }else{
+//             $('#del_rowBtn').hide();
+//         }
+//         this.props.canHan();
+//     }
+//
+//     render() {
+//         const divStyle = {
+//             margin: 0,
+//         };
+//
+//         return (
+//             <tr id={'tr-'+ this.props.TRs.id.toString() } >
+//                 <td>
+//                     <div className="checkbox" style={ divStyle } >
+//                         <label>
+//                             <input name='cbox' onChange={ this.handleCbox }
+//                                    type="checkbox"
+//                                    id={ 'check_bx'+ this.props.TRs.id }
+//                                    value={this.props.TRs.id} />
+//                             &nbsp;{ this.props.TRs.id }</label>
+//                     </div>
+//                 </td>
+//                 <td>{ this.props.TRs.name }</td>
+//                 <td>{ this.props.TRs.desc }</td>
+//                 <td>
+//                     { this.state.isToggleOn ? (
+//                         <button disabled className="btn btn-xs btn-default" >Edit</button>
+//                     ):(
+//                         <button onClick={ this.updateBtn }
+//                                 data-item={ this.props.TRs.id }
+//                                 className="btn btn-xs btn-default"
+//                         >
+//                             Edit
+//                         </button>
+//                     )
+//                     }
+//                 </td>
+//             </tr>
+//         );
+//     }
+// }
+//
+// class SampleTable extends React.Component {
+//     constructor(props, context) {
+//         super(props);
+//
+//         this.state = {
+//             TRs: [
+//                 {
+//                     id: 1,
+//                     name: 'rock',
+//                     desc: 'A form of solid matter that can break the head whoever hits'
+//                 }
+//             ],
+//             UPD:[]
+//         };
+//         this.deleteRow = this.deleteRow.bind(this);
+//         this.onAddForm = this.onAddForm.bind(this);
+//         this.delNrow = this.delNrow.bind(this);
+//         this.updateRow = this.updateRow.bind(this);
+//         this.cancelUpd = this.cancelUpd.bind(this);
+//         this.propcessUpd = this.propcessUpd.bind(this);
+//     }
+//     // delete multiple data
+//     deleteRow(z) {
+//         var array = this.state.TRs;
+//         var index = array.findIndex(e => e.id == z)
+//         array.splice(index, 1);
+//         this.setState({ TRs: array });
+//     }
+//
+//     delNrow() {
+//         var cof = confirm('Are you sure?');
+//         if (cof) {
+//             const tbox = $('#tableSample').find('input:checkbox[name=cbox]:checked');
+//             var arr = [];
+//             tbox.each(function(){
+//                 arr.push(parseInt($(this).val()));
+//             });
+//             for (var i = 0; i < arr.length; i++) {
+//                 this.deleteRow(arr[i]);
+//             }
+//             $('#del_rowBtn').hide();
+//         }
+//     } // end of delete function
+//
+//     // add form data
+//     onAddForm(formVal) {
+//         var ctr = this.state.TRs.length + 1;
+//         var Ndata = {
+//             id: ctr,
+//             name: formVal.name,
+//             desc: formVal.area
+//         };
+//         this.setState({ TRs: this.state.TRs.concat([Ndata]), UPD: {} })
+//     } // end add form function
+//
+//     updateRow(x) {
+//         var array = this.state.TRs;
+//         var index = array.findIndex(e => e.id == x);
+//         this.setState({
+//             UPD: this.state.TRs[index]
+//         });
+//     }
+//
+//     cancelUpd() {
+//         this.setState({ UPD: [] });
+//     }
+//
+//     propcessUpd(formVal) {
+//         var obj = this.state.TRs;
+//         var index = obj.findIndex(e => e.id == formVal.id)
+//         obj[index] = formVal;
+//         this.setState({ TRs: obj, UPD: [] });
+//     }
+//
+//     componentDidMount(){
+//         // this.setState({ TRs: this.props.tableRow })
+//     }
+//     render() {
+//         const display = {
+//             display: 'none'
+//         };
+//         const tRow = this.state.TRs.map(tr => (
+//             <TableBody onUpd={this.updateRow} TRs={ tr } key={tr.id} canHan={ this.cancelUpd } />
+//         ));
+//
+//         return (
+//             <div className='row margin-top'>
+//                 <div className='col-md-12'>
+//                     <AddFormData onAdd={ this.onAddForm }
+//                                  upd={ this.state.UPD }
+//                                  updcan={ this.cancelUpd }
+//                                  propUpd= { this.propcessUpd } />
+//                 </div>
+//                 <div className='col-md-12'>
+//                     <div className='row h35'>
+//                         <div className='col-md-6'>
+//                             <button onClick={ this.delNrow } id='del_rowBtn'
+//                                     className='btn btn-xs btn-default'
+//                                     style={display}>Delete in Row
+//                             </button>
+//                         </div>
+//                         <div className='col-md-offset-2 col-md-4'>
+//                         </div>
+//                     </div>
+//                     <table className="table table-hover table-striped table-bordered" id='tableSample' style={{marginTop: 20}}>
+//                         <thead>
+//                         <tr>
+//                             <th>Id</th>
+//                             <th>Name</th>
+//                             <th>Desc</th>
+//                             <th>Options</th>
+//                         </tr>
+//                         </thead>
+//                         <tbody>{ tRow }</tbody>
+//                     </table>
+//                 </div>
+//             </div>
+//         );
+//     }
+// }
+//
+// var Mydata = function(){
+//     var obj = [];
+//     $.ajax({
+//         async: false,
+//         global: false,
+//         dataType: 'json',
+//         type:'GET',
+//         url: 'http://jsonplaceholder.typicode.com/posts',
+//         success:function(data){
+//             for (var i = 0; i < 3; i++) {
+//                 obj[i] = {
+//                     'id': i+1,
+//                     'name': data[i].title,
+//                     'desc': data[i].body
+//                 };
+//             }
+//         }
+//     });
+//     return obj;
+// }();
+//
+// ReactDOM.render(
+//     <SampleTable tableRow={Mydata} />,
+//     document.getElementById('displayTable')
+// );
+
+
+(function(){
+
+    var recipeData = [
+        {   "id" : 0,
+            "name" : "Democratic Candidates Woo Silicon Valley for Donations, Then Bash It",
+            "components" : ["5 chicken eggs", "2 glasses of sugar", "200g of butter", "2 glasses of white flour", "2 table-spoon of cacao powder", "1 tea- spoon of baking-soda"],
+            "description": "Amazon, Apple, Facebook and Google, facing the growing possibility of antitrust action and legislation to rein in their power, are spending freely to gain influence and access."
+        },
+        {   "id" : 1,
+            "name" : "Tech Giants Amass a Lobbying Army for an Epic Washington Battle",
+            "components" : ["600g of pumkins", "2 garlic", "thyme", "olive oil", "1 table-spoon of balsamic vinegar", "1 onion", "water", "salt"],
+            "description": "I will add some info here soon"
+        },
+        {   "id" : 2,
+            "name" : "Election Rules Are an Obstacle to Cybersecurity of Presidential Campaigns",
+            "components" : ["3 chicken eggs", "15g of butter", "50g of cheese", "1 table-spoon of olive oil", "salt", "pepper"],
+            "description": "The images were meant to exonerate Richard Liu, the e-commerce mogul. They have also helped fuel a nascent #NoPerfectVictim movement."
         }
-    },
+    ];
 
-    onBtnClickHandler (e) {
-        e.preventDefault();
-        const { title, bigText, value } = this.state;
-        this.props.onAddNews({
-            id: +new Date(),
-            title: title,
-            bigText,
-            value
-        });
+    if (localStorage.getItem('recipeData') === null){
 
-        this.resetState();
-    },
+        localStorage.setItem('recipeData', JSON.stringify(recipeData));
 
-    resetState() {
-        this.setState({
-            title: '',
-            bigText: ''
-        });
-    },
+    }
 
-    handleChange(e) {
-        const { id, value } = e.currentTarget;
-        this.setState({ [id]: e.currentTarget.value })
-    },
 
-    render() {
-        const { title, bigText } = this.state;
-        return (
-            <form className='add'>
-                <h1 className="mainTitle">Create article</h1>
-                <input
-                    id='title'
-                    className="articleTitle"
-                    type="text"
-                    onChange={this.handleChange}
-                    value={title}
-                    placeholder="Enter article title"
-                />
-                <textarea
-                    id='bigText'
-                    className="articleText"
-                    onChange={this.handleChange}
-                    value={md.render(bigText)}
-                    placeholder="Enter article text"
-                />
-                <button
-                    className="buttonAddArticle"
-                    onClick={this.onBtnClickHandler}
-                >
-                    Add new article
-                </button>
-                <div className="articles">
-                    <h1 className="mainTitle">Article preview</h1>
-                    <div className="article">
-                        <p className="articlesTitle">{title}</p>
-                        <p className="article__big-text">{bigText}</p>
+
+
+    var Recipe = React.createClass({
+        in: "in",
+        openPanel: function(e){
+            var element = e.target.parentElement;
+            while (element.classList.item(0) !== "resipeContainer"){
+                element = element.parentElement;
+            }
+            if (this.in){
+                element.lastChild.classList.add("in");
+                this.in = "";
+            } else {
+                element.lastChild.classList.remove("in");
+                this.in="in";
+            }
+        },
+        removeRecipe: function(e){
+            var dataToRemove = JSON.parse(localStorage.getItem('recipeData'));
+
+            for (var i=0; i<dataToRemove.length; i++){
+                if (dataToRemove[i].id === this.props.id){
+                    dataToRemove.splice(i, 1);
+                }
+            }
+            for (var i=0; i<dataToRemove.length; i++){
+                dataToRemove[i].id = i;
+            }
+
+            this.openPanel(e);
+            localStorage.setItem('recipeData', JSON.stringify(dataToRemove));
+            renderDom(<RecipeBox data={dataToRemove}/>, 'content');
+        },
+        editRecipe: function(e){
+            document.getElementById("recipeName").value=this.props.name;
+            document.getElementById("components").value=this.props.components;
+            document.getElementById("description").value=this.props.description;
+        },
+        render: function(){
+            var components = this.props.components.map(function(component, item){
+                return components;
+            });
+            return (
+                <div className="panel panel-default" id={"panelTest" + this.props.id}>
+                    <div className="resipeContainer panel panel-default">
+                        <div className={"panel-heading panel" + this.props.id} onClick={this.openPanel}>
+                            <h4 className="panel-title">
+                                <a data-toggle="collapse" data-parent="accordion" href={"#collapse" + this.props.id} id={"name" + this.props.id}>
+                                    {this.props.name}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id={"#collapse" + this.props.id} className="panel-collapse collapse">
+                            <div className="panel-body">
+                                <ul className="list-group">
+                                    {components}
+                                </ul>
+                                <p className="recipeDescription">
+                                    {this.props.description}
+                                </p>
+                            </div>
+                            <div className="controlElements">
+                                <p className="bs-component" id="placeForBtns">
+                                    <button href="#" data-toggle="modal" data-target="#myModal" className="btn btn-primary" onClick={this.editRecipe}>Edit Article</button>
+                                    <button href="#" className="btn btn-danger" onClick={this.removeRecipe}>Delete Article</button>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </form>
-        )
-    }
-});
-
-// Add.propTypes = {
-//     onAddNews: PropTypes.func.isRequired,
-// };
-
-const ViewArticles = React.createClass ({
-    getInitialState() {
-        return {
-            value: '',
-            news: [],
-            title: '',
-            bigText: ''
+            );
         }
-    },
+    });
 
-    handleArticleDelete(articleId) {
-        this.setState({
-            news: this.state.news.filter(article => article.id !== articleId)
-        })
-    },
-
-    componentDidMount() {
-        const savedArticles = JSON.parse(localStorage.getItem('articles'));
-
-        if(savedArticles) {
-            this.setState({ news: savedArticles})
+    var RecipeList = React.createClass({
+        render: function(){
+            var recipes = this.props.data.map(
+                function(recipe){
+                    return(
+                        <Recipe name={recipe.name} description={recipe.description} components={recipe.components} key={recipe.id} id={recipe.id} ></Recipe>
+                    );
+                }
+            );
+            return(
+                <div className="list-group">
+                    <div className="panel-group" id="accordion">
+                        {recipes}
+                    </div>
+                </div>
+            );
         }
-    },
+    });
 
-    componentDidUpdate(prevProps, prevState) {
-        if(prevState.news !== this.state.news) {
-            this.saveToLocalStorage();
+    var FormRecipe = React.createClass({
+        render: function(){
+            return(
+                <form className="form-horizontal">
+                    <fieldset>
+                        <div className="form-group">
+                            <label for="recipeName" className="col-lg-2 control-label">Title</label>
+                            <div className="col-lg-10">
+                                <input type="text" className="form-control" id="recipeName"/>
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label for="description" className="col-lg-2 control-label">Article text</label>
+                            <div className="col-lg-10">
+                                <textarea className="form-control" rows="3" id="description"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            );
         }
-    },
+    });
 
-   saveToLocalStorage() {
-        const articles = JSON.stringify(this.state.news);
+    var Modal = React.createClass({
+        changeRecipeBox: function(e){
+            var dataToUpdate = JSON.parse(localStorage.getItem('recipeData'));
+            var id=0, newRecipe=true;
+            for (var i=0; i<dataToUpdate.length; i++){
+                if (dataToUpdate[i].name === document.getElementById("recipeName").value){
+                    id = dataToUpdate[i].id;
+                    newRecipe=false;
+                    break;
+                } else {
+                    id = dataToUpdate.length;
+                }
+            }
 
-        localStorage.setItem('articles', articles)
-    },
+            if (document.getElementById("recipeName").value && document.getElementById("components").value && document.getElementById("description").value){
+                if (newRecipe){
+                    dataToUpdate.push({});
+                    dataToUpdate[dataToUpdate.length-1].id=id;
+                }
 
-    handleAddNews(data) {
-        const nextNews = [data, ...this.state.news];
-        this.setState({ news: nextNews })
-    },
+                dataToUpdate[id].name=document.getElementById("recipeName").value;
+                dataToUpdate[id].components=document.getElementById("components").value.split(",");
+                dataToUpdate[id].description=document.getElementById("description").value;
+            }
+            localStorage.setItem('recipeData', JSON.stringify(dataToUpdate));
+            renderDom(<RecipeBox data={dataToUpdate}/>, 'content');
+        },
+        render: function(){
+            return(
+                <div id="myModal" className="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 className="modal-title" id="myModalLabel">Article</h4>
+                            </div>
+                            <div className="modal-body">
+                                <div className="well bs-component" id="testForm">
+                                    <FormRecipe />
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.changeRecipeBox}>Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    });
 
-    render (){
-        const {onNoteDelete, news} = this.props;
-        return (
-            <div className="wrapperArticle">
-                <CreateArticle
-                    onAddNews={this.handleAddNews}
-                    onNoteDelete={this.handleArticleDelete}
-                />
-                <News data={this.state.news}/>
-            </div>
-        )
-    },
-});
+    var RecipeBox = React.createClass({
+        addNewRecipe(){
+            document.getElementById("recipeName").value="";
+            document.getElementById("components").value="";
+            document.getElementById("description").value="";
+        },
+        clearLocalStorage(){
+            localStorage.clear();
+            // location.reload();
+        },
+        render(){
+            return(
+                <div className="container">
+                    <h1 className="mainTitle">Articles</h1>
+                    <RecipeList data={this.props.data}/>
+                    <button className="btn btn-primary" data-toggle="modal" data-target="#myModal" onClick={this.addNewRecipe}>Create New Article</button>
+                    <button className="btn btn-default" onClick={this.clearLocalStorage}>Clear LocalStorage</button>
+                </div>
+            )
+        }
+    });
 
-ReactDOM.render (
-    <ViewArticles />,
-    document.getElementById('root')
-);
+    function renderDom(element, id){
+        ReactDOM.render(element, document.getElementById(id));
+    };
+
+    renderDom(<Modal />, 'source-modal');
+    renderDom(<RecipeBox data={JSON.parse(localStorage.getItem('recipeData'))}/>, 'content');
+
+
+})();
 
