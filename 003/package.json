@@ -4,6 +4,7 @@
   "description": "react tasks",
   "main": "main.js",
   "dependencies": {
+    "for-editor": "^0.2.6",
     "http-server": "^0.11.1",
     "prop-types": "^15.7.2",
     "react-card-flip": "^0.7.1",
@@ -11,7 +12,9 @@
     "react-live-preview": "0.0.8-alpha",
     "react-markdown-textarea": "^1.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "react-markdown": "^4.0.9"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

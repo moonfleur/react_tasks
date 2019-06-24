@@ -232,7 +232,6 @@
 //     document.getElementById('root')
 // );
 
-
 //4
 // Используйте уже написанные компоненты и добавьте в него поиск по имени.
 // Поиск должен работать моментально: по мере ввода текста в поле для поиска, должен фильтроваться список.
@@ -600,7 +599,9 @@
 //     document.getElementById('root')
 // );
 
-//5
+
+//Перший варіант, не перевіряти
+//6
 // let md = new Remarkable('full', {
 //     html: true,
 //     linkify: true,
@@ -619,7 +620,6 @@
 //     'sub',
 //     'sup'
 // ]);
-
 // const News = React.createClass ({
 //     renderNews() {
 //         const { data, onNoteDelete } = this.props;
@@ -856,367 +856,118 @@
 //     document.getElementById('root')
 // );
 
-// class AddFormData extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = { textName: '', textArea: '' };
-//         this.onFormSubmit = this.onFormSubmit.bind(this);
-//         this.textNameChange = this.textNameChange.bind(this);
-//         this.textDescChange = this.textDescChange.bind(this);
-//         this.cancelUpd = this.cancelUpd.bind(this);
-//     }
-//
-//     componentWillReceiveProps(nextProps){
-//         if (nextProps.upd.id) {
-//             this.setState({
-//                 textName: nextProps.upd.name,
-//                 textArea: nextProps.upd.desc
-//             });
-//         }else{
-//             this.setState({ textName:'', textArea: '' });
-//         }
-//     }
-//
-//     textNameChange(e){ this.setState({ textName: e.target.value }) }
-//     textDescChange(e){ this.setState({ textArea: e.target.value }) }
-//
-//     onFormSubmit(e) {
-//         e.preventDefault();
-//         if (this.props.upd.id) {
-//             // update component
-//             this.props.propUpd({
-//                 id: this.props.upd.id,
-//                 name: this.state.textName,
-//                 desc: this.state.textArea
-//             });
-//         } else {
-//             var formVal = {
-//                 name: this.state.textName,
-//                 area: this.state.textArea
-//             };
-//             this.props.onAdd(formVal);
-//         }
-//         this.setState({ textName:'', textArea: '' });
-//     }
-//     cancelUpd() {
-//         this.props.updcan();
-//         this.setState({ textName:'', textArea: '' });
-//     }
-//
-//     render() {
-//         return (
-//             <form onSubmit={ this.onFormSubmit } className='well'>
-//                 <h1 className="mainTitle">{ this.props.upd.id ? 'Edit article':'Create article' }</h1>
-//                 <div className='form-group'>
-//                     <label>Title</label>
-//                     <input type='text' className='form-control'
-//                            onChange={ this.textNameChange }
-//                            value={ this.state.textName  } />
-//                 </div>
-//                 <div className='form-group'>
-//                     <label>Article text</label>
-//                     <textarea className="form-control" rows="3"
-//                               onChange={ this.textDescChange }
-//                               value={ this.state.textArea }
-//                     />
-//                 </div>
-//                 <button type="submit" className="btn btn-success">
-//                     { this.props.upd.id ? 'Save changes': 'Create' }
-//                 </button>&nbsp;
-//                 {
-//                     this.props.upd.id ?
-//                         (<button type="button"
-//                                  onClick={ this.cancelUpd }
-//                                  className="btn btn-default" >Cancel</button>
-//                         ):null
-//                 }
-//             </form>
-//         );
-//     }
-// }
-//
-// class TableBody extends React.Component {
-//     constructor(props, context) {
-//         super(props, context);
-//         this.state = { isToggleOn: false };
-//         this.updateBtn = this.updateBtn.bind(this);
-//         this.handleCbox = this.handleCbox.bind(this);
-//     }
-//
-//     updateBtn(e) {
-//         this.props.onUpd( e.target.dataset.item );
-//     }
-//
-//     handleCbox() {
-//         this.setState(prevState => ({
-//             isToggleOn: !prevState.isToggleOn
-//         }));
-//         var cnt = $('#tableSample').find('input:checkbox[name=cbox]:checked');
-//         if (cnt.length) {
-//             $('#del_rowBtn').show();
-//         }else{
-//             $('#del_rowBtn').hide();
-//         }
-//         this.props.canHan();
-//     }
-//
-//     render() {
-//         const divStyle = {
-//             margin: 0,
-//         };
-//
-//         return (
-//             <tr id={'tr-'+ this.props.TRs.id.toString() } >
-//                 <td>
-//                     <div className="checkbox" style={ divStyle } >
-//                         <label>
-//                             <input name='cbox' onChange={ this.handleCbox }
-//                                    type="checkbox"
-//                                    id={ 'check_bx'+ this.props.TRs.id }
-//                                    value={this.props.TRs.id} />
-//                             &nbsp;{ this.props.TRs.id }</label>
-//                     </div>
-//                 </td>
-//                 <td>{ this.props.TRs.name }</td>
-//                 <td>{ this.props.TRs.desc }</td>
-//                 <td>
-//                     { this.state.isToggleOn ? (
-//                         <button disabled className="btn btn-xs btn-default" >Edit</button>
-//                     ):(
-//                         <button onClick={ this.updateBtn }
-//                                 data-item={ this.props.TRs.id }
-//                                 className="btn btn-xs btn-default"
-//                         >
-//                             Edit
-//                         </button>
-//                     )
-//                     }
-//                 </td>
-//             </tr>
-//         );
-//     }
-// }
-//
-// class SampleTable extends React.Component {
-//     constructor(props, context) {
-//         super(props);
-//
-//         this.state = {
-//             TRs: [
-//                 {
-//                     id: 1,
-//                     name: 'rock',
-//                     desc: 'A form of solid matter that can break the head whoever hits'
-//                 }
-//             ],
-//             UPD:[]
-//         };
-//         this.deleteRow = this.deleteRow.bind(this);
-//         this.onAddForm = this.onAddForm.bind(this);
-//         this.delNrow = this.delNrow.bind(this);
-//         this.updateRow = this.updateRow.bind(this);
-//         this.cancelUpd = this.cancelUpd.bind(this);
-//         this.propcessUpd = this.propcessUpd.bind(this);
-//     }
-//     // delete multiple data
-//     deleteRow(z) {
-//         var array = this.state.TRs;
-//         var index = array.findIndex(e => e.id == z)
-//         array.splice(index, 1);
-//         this.setState({ TRs: array });
-//     }
-//
-//     delNrow() {
-//         var cof = confirm('Are you sure?');
-//         if (cof) {
-//             const tbox = $('#tableSample').find('input:checkbox[name=cbox]:checked');
-//             var arr = [];
-//             tbox.each(function(){
-//                 arr.push(parseInt($(this).val()));
-//             });
-//             for (var i = 0; i < arr.length; i++) {
-//                 this.deleteRow(arr[i]);
-//             }
-//             $('#del_rowBtn').hide();
-//         }
-//     } // end of delete function
-//
-//     // add form data
-//     onAddForm(formVal) {
-//         var ctr = this.state.TRs.length + 1;
-//         var Ndata = {
-//             id: ctr,
-//             name: formVal.name,
-//             desc: formVal.area
-//         };
-//         this.setState({ TRs: this.state.TRs.concat([Ndata]), UPD: {} })
-//     } // end add form function
-//
-//     updateRow(x) {
-//         var array = this.state.TRs;
-//         var index = array.findIndex(e => e.id == x);
-//         this.setState({
-//             UPD: this.state.TRs[index]
-//         });
-//     }
-//
-//     cancelUpd() {
-//         this.setState({ UPD: [] });
-//     }
-//
-//     propcessUpd(formVal) {
-//         var obj = this.state.TRs;
-//         var index = obj.findIndex(e => e.id == formVal.id)
-//         obj[index] = formVal;
-//         this.setState({ TRs: obj, UPD: [] });
-//     }
-//
-//     componentDidMount(){
-//         // this.setState({ TRs: this.props.tableRow })
-//     }
-//     render() {
-//         const display = {
-//             display: 'none'
-//         };
-//         const tRow = this.state.TRs.map(tr => (
-//             <TableBody onUpd={this.updateRow} TRs={ tr } key={tr.id} canHan={ this.cancelUpd } />
-//         ));
-//
-//         return (
-//             <div className='row margin-top'>
-//                 <div className='col-md-12'>
-//                     <AddFormData onAdd={ this.onAddForm }
-//                                  upd={ this.state.UPD }
-//                                  updcan={ this.cancelUpd }
-//                                  propUpd= { this.propcessUpd } />
-//                 </div>
-//                 <div className='col-md-12'>
-//                     <div className='row h35'>
-//                         <div className='col-md-6'>
-//                             <button onClick={ this.delNrow } id='del_rowBtn'
-//                                     className='btn btn-xs btn-default'
-//                                     style={display}>Delete in Row
-//                             </button>
-//                         </div>
-//                         <div className='col-md-offset-2 col-md-4'>
-//                         </div>
-//                     </div>
-//                     <table className="table table-hover table-striped table-bordered" id='tableSample' style={{marginTop: 20}}>
-//                         <thead>
-//                         <tr>
-//                             <th>Id</th>
-//                             <th>Name</th>
-//                             <th>Desc</th>
-//                             <th>Options</th>
-//                         </tr>
-//                         </thead>
-//                         <tbody>{ tRow }</tbody>
-//                     </table>
-//                 </div>
-//             </div>
-//         );
-//     }
-// }
-//
-// var Mydata = function(){
-//     var obj = [];
-//     $.ajax({
-//         async: false,
-//         global: false,
-//         dataType: 'json',
-//         type:'GET',
-//         url: 'http://jsonplaceholder.typicode.com/posts',
-//         success:function(data){
-//             for (var i = 0; i < 3; i++) {
-//                 obj[i] = {
-//                     'id': i+1,
-//                     'name': data[i].title,
-//                     'desc': data[i].body
-//                 };
-//             }
-//         }
-//     });
-//     return obj;
-// }();
-//
-// ReactDOM.render(
-//     <SampleTable tableRow={Mydata} />,
-//     document.getElementById('displayTable')
-// );
 
+//Другий варіант, правильний
+//6
+//Должна быть форма для создания новой статьи (вводим title и text). При нажатии на кнопку "Опубликовать", статья должна появится в списке статей на странице.
+//
+// Текст статьи должен поддерживать форматировние Markdown. Для процессинга Markdown используйте одну из библиотек (можно подключить через cdn). Например, [Remarkable](https://github.com/jonschlinkert/remarkable).
+//
+// Интерфейс на ваше усмотрение (обязательно прикладывайте скриншот, а лучше - ссылочку на рабочее приложение).
+//
+// *Дополнительно в этом задании:*
+//
+// ⭐️ - Можете добавить Live Preview для формы создания статьи (лучше сделать вкладками, как на гитхабе).
+//
+// ⭐️ - Удаление статей
+//
+// ⭐️ - Кнопка свернуть/развернуть для статьи
+//
+// ⭐️⭐️ - Редактирование статей
+//
+// ⭐️⭐️ - Поиск по статьям
 
 (function(){
 
-    var recipeData = [
-        {   "id" : 0,
+    let articlesData = [
+        {"id" : 0,
             "name" : "Democratic Candidates Woo Silicon Valley for Donations, Then Bash It",
-            "components" : ["5 chicken eggs", "2 glasses of sugar", "200g of butter", "2 glasses of white flour", "2 table-spoon of cacao powder", "1 tea- spoon of baking-soda"],
+            "description": "Until recently big tech companies were seen as one of the few relatively untainted sources of big-money donations for Democrats. Now, that’s changing."
+        },
+        {"id" : 1,
+            "name" : "Tech Giants Amass a Lobbying Army for an Epic Washington Battle",
             "description": "Amazon, Apple, Facebook and Google, facing the growing possibility of antitrust action and legislation to rein in their power, are spending freely to gain influence and access."
         },
-        {   "id" : 1,
-            "name" : "Tech Giants Amass a Lobbying Army for an Epic Washington Battle",
-            "components" : ["600g of pumkins", "2 garlic", "thyme", "olive oil", "1 table-spoon of balsamic vinegar", "1 onion", "water", "salt"],
-            "description": "I will add some info here soon"
-        },
-        {   "id" : 2,
+        { "id" : 2,
             "name" : "Election Rules Are an Obstacle to Cybersecurity of Presidential Campaigns",
-            "components" : ["3 chicken eggs", "15g of butter", "50g of cheese", "1 table-spoon of olive oil", "salt", "pepper"],
-            "description": "The images were meant to exonerate Richard Liu, the e-commerce mogul. They have also helped fuel a nascent #NoPerfectVictim movement."
+            "description": "Security experts warn that time is running out for campaigns to create protections against the cyberattacks and disinformation seen in recent elections."
         }
     ];
 
-    if (localStorage.getItem('recipeData') === null){
+    if (localStorage.getItem('articlesData') === null){
 
-        localStorage.setItem('recipeData', JSON.stringify(recipeData));
+        localStorage.setItem('articlesData', JSON.stringify(articlesData));
 
     }
 
 
+    // var ResipeComponent = React.createClass({
+    //     render: function(){
+    //         return (<li className="list-group-item">{this.props.component}</li>);
+    //     }
+    // });
 
-
-    var Recipe = React.createClass({
-        in: "in",
-        openPanel: function(e){
-            var element = e.target.parentElement;
-            while (element.classList.item(0) !== "resipeContainer"){
-                element = element.parentElement;
-            }
-            if (this.in){
-                element.lastChild.classList.add("in");
-                this.in = "";
-            } else {
-                element.lastChild.classList.remove("in");
-                this.in="in";
+    const Article = React.createClass({
+        getInitialState () {
+            return {
+                visible: false
             }
         },
-        removeRecipe: function(e){
-            var dataToRemove = JSON.parse(localStorage.getItem('recipeData'));
 
-            for (var i=0; i<dataToRemove.length; i++){
+        handleReadClick(e) {
+            e.preventDefault();
+            this.setState({ visible: true })
+        },
+
+        handleHideClick(e) {
+            e.preventDefault();
+            this.setState({ visible: false })
+        },
+
+        // in: "in",
+        // openPanel (e){
+        //     let element = e.target.parentElement;
+        //     while (element.classList.item(0) !== "articleContainer"){
+        //         element = element.parentElement;
+        //     }
+        //     if (this.in){
+        //         element.lastChild.classList.add("in");
+        //         this.in = "";
+        //     } else {
+        //         element.lastChild.classList.remove("in");
+        //         this.in="in";
+        //     }
+        // },
+        removeArticle (e){
+            let dataToRemove = JSON.parse(localStorage.getItem('articlesData'));
+
+            for (let i = 0; i < dataToRemove.length; i++){
                 if (dataToRemove[i].id === this.props.id){
                     dataToRemove.splice(i, 1);
                 }
             }
-            for (var i=0; i<dataToRemove.length; i++){
+            for (let i = 0; i < dataToRemove.length; i++){
                 dataToRemove[i].id = i;
             }
 
             this.openPanel(e);
-            localStorage.setItem('recipeData', JSON.stringify(dataToRemove));
-            renderDom(<RecipeBox data={dataToRemove}/>, 'content');
+            localStorage.setItem('articlesData', JSON.stringify(dataToRemove));
+            renderDom(<ArticleBox data={dataToRemove}/>, 'content');
         },
-        editRecipe: function(e){
-            document.getElementById("recipeName").value=this.props.name;
-            document.getElementById("components").value=this.props.components;
+        editArticle (e){
+            document.getElementById("articleName").value=this.props.name;
+            //document.getElementById("components").value=this.props.components;
             document.getElementById("description").value=this.props.description;
         },
-        render: function(){
-            var components = this.props.components.map(function(component, item){
-                return components;
-            });
+        render (){
+            // var components = this.props.components.map(function(component, item){
+            //     return (<ResipeComponent component={component} key={item}>
+            //     </ResipeComponent>);
+            // });
+            const { visible } = this.state;
             return (
                 <div className="panel panel-default" id={"panelTest" + this.props.id}>
-                    <div className="resipeContainer panel panel-default">
+                    <div className="articleContainer panel panel-default">
                         <div className={"panel-heading panel" + this.props.id} onClick={this.openPanel}>
                             <h4 className="panel-title">
                                 <a data-toggle="collapse" data-parent="accordion" href={"#collapse" + this.props.id} id={"name" + this.props.id}>
@@ -1224,21 +975,31 @@
                                 </a>
                             </h4>
                         </div>
-                        <div id={"#collapse" + this.props.id} className="panel-collapse collapse">
-                            <div className="panel-body">
-                                <ul className="list-group">
-                                    {components}
-                                </ul>
-                                <p className="recipeDescription">
-                                    {this.props.description}
-                                </p>
-                            </div>
-                            <div className="controlElements">
-                                <p className="bs-component" id="placeForBtns">
-                                    <button href="#" data-toggle="modal" data-target="#myModal" className="btn btn-primary" onClick={this.editRecipe}>Edit Article</button>
-                                    <button href="#" className="btn btn-danger" onClick={this.removeRecipe}>Delete Article</button>
-                                </p>
-                            </div>
+                        <div id={"#collapse" + this.props.id}>
+                            {
+                                !visible &&
+                                <div>
+                                    <button onClick={this.handleReadClick} className='btn btnshow'>Read Article</button>
+                                </div>
+                            }
+                            {
+                                visible &&
+                                <div className="panel-body">
+                                    {/*<ul className="list-group">*/}
+                                    {/*    {components}*/}
+                                    {/*</ul>*/}
+                                    <p className="articleDescription">
+                                        {this.props.description}
+                                    </p>
+                                    <div className="controlElements">
+                                        <p className="bs-component" id="placeForBtns">
+                                            <button data-toggle="modal" data-target="#myModal" className="btn btnprimary" onClick={this.editArticle}>Edit Article</button>
+                                            <button className="btn btn-delete" onClick={this.removeArticle}>Delete Article</button>
+                                            <button onClick={this.handleHideClick} className='btn btnhide'>Hide Article</button>
+                                        </p>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -1246,41 +1007,105 @@
         }
     });
 
-    var RecipeList = React.createClass({
-        render: function(){
-            var recipes = this.props.data.map(
-                function(recipe){
-                    return(
-                        <Recipe name={recipe.name} description={recipe.description} components={recipe.components} key={recipe.id} id={recipe.id} ></Recipe>
-                    );
+    const ArticleList = React.createClass({
+        getInitialState() {
+            return {
+                value: 'Search...'
+            }
+        },
+
+        searchName(event) {
+            this.setState({value: event.target.value});
+        },
+
+        render (){
+            var articles = this.props.data.map((article)=> {
+                    return (
+                        <Article name={article.name} description={article.description} key={article.id} id={article.id}/>
+                    )
                 }
             );
+            const lowercasedValue = this.state.value.toLowerCase();
+            const filteredData = this.props.data.filter(item => {
+                return Object.keys(item).some(key =>
+                    typeof item[key] === "string" && item[key].toLowerCase().includes(lowercasedValue)
+                );
+            });
             return(
                 <div className="list-group">
+                    <div>
+                        <input type="text" placeholder={this.state.value} className="inputSearch" onChange={(e) => this.searchName(e)} id="inputs"/>
+                    </div>
+                    <div className="spacesBetweenSearchAndArticles">
+                        {/*<i className="fas fa-search"/>*/}
+                        {
+                            filteredData.map(member =>
+                                <Article
+                                    key={member.id}
+                                    name={member.name}
+                                    description={member.description}
+                                />
+                            )
+                        }
+                    </div>
                     <div className="panel-group" id="accordion">
-                        {recipes}
+                        {articles}
                     </div>
                 </div>
             );
         }
     });
 
-    var FormRecipe = React.createClass({
-        render: function(){
+    const ArticleForm = React.createClass({
+        getInitialState() {
+            return {
+                value: ''
+            }
+        },
+
+        handleChange(e) {
+            this.setState({ value: e.target.value });
+        },
+
+        getRawMarkup() {
+            const md = new Remarkable();
+            return { __html: md.render(this.state.value) };
+        },
+
+        render (){
             return(
                 <form className="form-horizontal">
                     <fieldset>
                         <div className="form-group">
-                            <label for="recipeName" className="col-lg-2 control-label">Title</label>
+                            <label for="articleName" className="col-lg-2 control-label">Article Title</label>
                             <div className="col-lg-10">
-                                <input type="text" className="form-control" id="recipeName"/>
+                                <input type="text" className="form-control" id="articleName"/>
                             </div>
                         </div>
-
+                        {/*<div className="form-group">*/}
+                        {/*    <label for="components" className="col-lg-2 control-label">Components</label>*/}
+                        {/*    <div className="col-lg-10">*/}
+                        {/*        <textarea className="form-control" rows="3" id="components"></textarea>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <div className="form-group">
-                            <label for="description" className="col-lg-2 control-label">Article text</label>
+                            <label for="description" className="col-lg-2 control-label">Description</label>
                             <div className="col-lg-10">
-                                <textarea className="form-control" rows="3" id="description"></textarea>
+                                <textarea
+                                    className="form-control"
+                                    rows="3" id="description"
+                                    onChange={this.handleChange}
+                                    defaultValue={this.state.value}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="description" className="col-lg-2 control-label">Preview</label>
+                            <div className="col-lg-10">
+                                <div
+                                    className="form-control"
+                                    dangerouslySetInnerHTML={this.getRawMarkup()}
+                                />
                             </div>
                         </div>
                     </fieldset>
@@ -1289,12 +1114,12 @@
         }
     });
 
-    var Modal = React.createClass({
-        changeRecipeBox: function(e){
-            var dataToUpdate = JSON.parse(localStorage.getItem('recipeData'));
-            var id=0, newRecipe=true;
-            for (var i=0; i<dataToUpdate.length; i++){
-                if (dataToUpdate[i].name === document.getElementById("recipeName").value){
+    const Modal = React.createClass({
+        changeArticleBox (e){
+            let dataToUpdate = JSON.parse(localStorage.getItem('articlesData'));
+            let id = 0, newRecipe = true;
+            for (let i = 0; i < dataToUpdate.length; i++){
+                if (dataToUpdate[i].name === document.getElementById("articleName").value){
                     id = dataToUpdate[i].id;
                     newRecipe=false;
                     break;
@@ -1303,22 +1128,22 @@
                 }
             }
 
-            if (document.getElementById("recipeName").value && document.getElementById("components").value && document.getElementById("description").value){
+            if (document.getElementById("articleName").value && document.getElementById("description").value){
                 if (newRecipe){
                     dataToUpdate.push({});
-                    dataToUpdate[dataToUpdate.length-1].id=id;
+                    dataToUpdate[dataToUpdate.length-1].id = id;
                 }
 
-                dataToUpdate[id].name=document.getElementById("recipeName").value;
-                dataToUpdate[id].components=document.getElementById("components").value.split(",");
+                dataToUpdate[id].name=document.getElementById("articleName").value;
+                // dataToUpdate[id].components=document.getElementById("components").value.split(",");
                 dataToUpdate[id].description=document.getElementById("description").value;
             }
-            localStorage.setItem('recipeData', JSON.stringify(dataToUpdate));
-            renderDom(<RecipeBox data={dataToUpdate}/>, 'content');
+            localStorage.setItem('articlesData', JSON.stringify(dataToUpdate));
+            renderDom(<ArticleBox data={dataToUpdate}/>, 'content');
         },
-        render: function(){
+        render (){
             return(
-                <div id="myModal" className="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div id="myModal" className="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -1327,12 +1152,12 @@
                             </div>
                             <div className="modal-body">
                                 <div className="well bs-component" id="testForm">
-                                    <FormRecipe />
+                                    <ArticleForm />
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.changeRecipeBox}>Save</button>
+                                <button type="button" className="btn btndefault" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btnprimary" data-dismiss="modal" onClick={this.changeArticleBox}>Save</button>
                             </div>
                         </div>
                     </div>
@@ -1341,23 +1166,19 @@
         }
     });
 
-    var RecipeBox = React.createClass({
-        addNewRecipe(){
-            document.getElementById("recipeName").value="";
-            document.getElementById("components").value="";
+    const ArticleBox = React.createClass({
+        addNewArticle (){
+            document.getElementById("articleName").value="";
+            // document.getElementById("components").value="";
             document.getElementById("description").value="";
         },
-        clearLocalStorage(){
-            localStorage.clear();
-            // location.reload();
-        },
-        render(){
+
+        render (){
             return(
                 <div className="container">
                     <h1 className="mainTitle">Articles</h1>
-                    <RecipeList data={this.props.data}/>
-                    <button className="btn btn-primary" data-toggle="modal" data-target="#myModal" onClick={this.addNewRecipe}>Create New Article</button>
-                    <button className="btn btn-default" onClick={this.clearLocalStorage}>Clear LocalStorage</button>
+                    <ArticleList data={this.props.data}/>
+                    <button className="buttonAddArticle" data-toggle="modal" data-target="#myModal" onClick={this.addNewArticle}>Create New Article</button>
                 </div>
             )
         }
@@ -1365,11 +1186,16 @@
 
     function renderDom(element, id){
         ReactDOM.render(element, document.getElementById(id));
-    };
+    }
 
     renderDom(<Modal />, 'source-modal');
-    renderDom(<RecipeBox data={JSON.parse(localStorage.getItem('recipeData'))}/>, 'content');
-
-
+    renderDom(<ArticleBox data={JSON.parse(localStorage.getItem('articlesData'))}/>, 'content');
+    //renderDom(<SearchBox/>, 'root');
 })();
+
+
+
+
+
+
 

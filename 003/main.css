@@ -377,8 +377,8 @@ i {
     margin: 0 auto;
 }
 
-.article__big-text {
-    color: #634536;
+.panel-title {
+    color: #824020;
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
     text-align: justify;
@@ -388,11 +388,11 @@ i {
     height: 200px;
 }
 
-.newsArticle {
+.articleDescription {
     color: #B37B60;
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
-    text-align: center;
+    text-align: justify;
 }
 
 .buttonAddArticle,
@@ -408,8 +408,8 @@ i {
     text-align: center;
     margin: 20px auto;
     padding: 10px;
-    width: 170px;
-    height: 44px;
+    width: 190px;
+    height: 50px;
     border: none;
     color: white;
     display: block;
@@ -417,7 +417,7 @@ i {
 }
 
 .buttonAddArticle:hover {
-    background: #9af5ee;
+    background: #63a9a2;
     transition: all 0.3s ease;
 }
 
@@ -438,12 +438,113 @@ i {
     justify-content: space-between;
 }
 
-.btn-primary {
-    margin: 0 15px;
-    background-color: #00c9b7;
+.btnprimary {
+    margin: 15px 15px 0 0;
+    background-color: #CCB349;
+    color: white;
+    border-radius: 50px;
+    width: 130px;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    letter-spacing: 0.094em;
+    font-family: 'Poppins', sans-serif;
 }
 
-.btn-danger {
-    background-color: red;
+.btnprimary:hover {
+    background: #c1a142;
+    transition: all 0.3s ease;
 }
+
+.btndefault {
+    background-color: #849997;
+    color: white;
+    border-radius: 50px;
+    width: 130px;
+    margin: 15px 15px 0 0;
+    font-size: 12px;
+    letter-spacing: 0.094em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btndefault:hover {
+    background: #506260;
+    transition: all 0.3s ease;
+}
+
+.btn-delete {
+    background-color: #849997;
+    color: white;
+    border-radius: 50px;
+    width: 130px;
+    margin: 15px 15px 0 0;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    letter-spacing: 0.094em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-delete:hover {
+    background: #506260;
+    transition: all 0.3s ease;
+}
+
+.btnshow {
+    background-color: #00c9b7;
+    border-radius: 50px;
+    color: white;
+    margin: 15px 0 15px 15px;
+    width: 130px;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    letter-spacing: 0.094em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btnshow:hover {
+    background: #63a9a2;
+    transition: all 0.3s ease;
+}
+
+.btnhide {
+    background-color: #67a07b;
+    color: white;
+    margin: 15px 15px 0 0;
+    width: 130px;
+    border-radius: 50px;
+    font-size: 12px;
+    letter-spacing: 0.094em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btnhide:hover {
+    background: #3d6a4e;
+    transition: all 0.3s ease;
+}
+
+.panel-default {
+    border: 1px solid #e8d2c7;
+}
+
+.inputSearch {
+    display: block;
+    margin: 30px auto 0;
+    width: 938px;
+    height: 30px;
+    padding-left: 15px;
+    border-radius: 4px;
+    border: 2px solid #e8d2c7;
+    color: #824020;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.panel {
+    margin-bottom: -1px;
+}
+
+.spacesBetweenSearchAndArticles {
+    margin: 60px auto;
+}
+
+
 
