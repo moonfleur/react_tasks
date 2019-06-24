@@ -960,15 +960,11 @@
             document.getElementById("description").value=this.props.description;
         },
         render (){
-            // var components = this.props.components.map(function(component, item){
-            //     return (<ResipeComponent component={component} key={item}>
-            //     </ResipeComponent>);
-            // });
             const { visible } = this.state;
             return (
                 <div className="panel panel-default" id={"panelTest" + this.props.id}>
                     <div className="articleContainer panel panel-default">
-                        <div className={"panel-heading panel" + this.props.id} onClick={this.openPanel}>
+                        <div className={"panel-heading panel" + this.props.id}>
                             <h4 className="panel-title">
                                 <a data-toggle="collapse" data-parent="accordion" href={"#collapse" + this.props.id} id={"name" + this.props.id}>
                                     {this.props.name}
