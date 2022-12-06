@@ -4,7 +4,7 @@
   "description": "react tasks",
   "main": "main.js",
   "dependencies": {
-    "http-server": "^0.11.1",
+    "http-server": "^0.11.2",
     "react-card-flip": "^0.7.1",
     "react-flippy": "^0.1.2"
   },
